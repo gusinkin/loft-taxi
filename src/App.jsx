@@ -13,8 +13,8 @@ const PAGES = {
 };
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { page: 'login' };
   }
 

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 class RegPage extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const userName = e.target.userName.value;
-    const password = e.target.password.value;
-    console.log(email, userName, password);
-
+  setMapPage = () => {
     const { setPage } = this.props;
     setPage('map');
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.setMapPage();
   };
 
   render() {

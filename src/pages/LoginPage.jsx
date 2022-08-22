@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 
 class LoginPage extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    console.log(email, password);
-
+  setMapPage = () => {
     const { setPage } = this.props;
     setPage('map');
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.setMapPage();
   };
 
   render() {
