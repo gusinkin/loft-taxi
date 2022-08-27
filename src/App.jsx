@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import LoginPage from './pages/LoginPage';
-import MapPage from './pages/MapPage';
+import { MapPage } from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
 import RegPage from './pages/RegPage';
 
