@@ -1,41 +1,49 @@
 import React, { Component } from 'react';
+import { withAuth } from '../AuthContext';
 
 class LoginPage extends Component {
-  setMapPage = () => {
-    const { setPage } = this.props;
-    setPage('map');
+  authenticate = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target;
+    this.props.logIn(email.value, password.value);
+    this.setProfilePage();
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    this.setMapPage();
+  setProfilePage = () => {
+    const { setPage } = this.props;
+    setPage('profile');
   };
 
   render() {
     const { setPage } = this.props;
 
     return (
-      <div>
-        <h1>Login page</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email:
-            <input name='email' type='text' />
-          </label>
-          <label>
-            Пароль:
-            <input name='password' type='text' />
-          </label>
-          <input type='submit' value='Submit' />
-        </form>
-        <div>
-          <span>Новый пользователь?</span>
-          <button onClick={() => setPage('reg')}>Регистрация</button>
-        </div>
-      </div>
+      <>
+        {this.props.isLoggedIn ? (
+          <p>
+            You are logged in{' '}
+            <button onClick={this.setProfilePage}>go to profile</button>
+          </p>
+        ) : (
+          <>
+            <form onSubmit={this.authenticate}>
+              <label>
+                Email:
+                <input name='email' type='text' />
+              </label>
+              <label>
+                Пароль:
+                <input name='password' type='text' />
+              </label>
+              <input type='submit' value='Submit' />
+            </form>
+            <span>Новый пользователь?</span>
+            <button onClick={() => setPage('reg')}>Регистрация</button>
+          </>
+        )}
+      </>
     );
   }
 }
 
-export default LoginPage;
+export const LoginPageWithAuth = withAuth(LoginPage);

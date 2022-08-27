@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { withAuth } from './AuthContext';
 import Header from './Header';
-import LoginPage from './pages/LoginPage';
+import { LoginPageWithAuth } from './pages/LoginPage';
 import { MapPage } from './pages/MapPage';
-import ProfilePage from './pages/ProfilePage';
+import { ProfilePageWithAuth } from './pages/ProfilePage';
 import RegPage from './pages/RegPage';
 
 const PAGES = {
-  login: LoginPage,
-  map: MapPage,
-  profile: ProfilePage,
-  reg: RegPage,
+  login: (props) => <LoginPageWithAuth {...props} />,
+  map: (props) => <MapPage {...props} />,
+  profile: (props) => <ProfilePageWithAuth {...props} />,
+  reg: (props) => <RegPage {...props} />,
 };
 
 class App extends Component {
@@ -19,20 +20,22 @@ class App extends Component {
   }
 
   setPage = (pageName) => {
-    this.setState({ page: pageName });
+    if (this.props.isLoggedIn || pageName === 'reg') {
+      this.setState({ page: pageName });
+    } else {
+      this.setState({ page: 'login' });
+    }
   };
 
   render() {
-    const { page } = this.state;
-    const CurrentPage = PAGES[page];
-
     return (
       <div className='App'>
         <Header setPage={this.setPage} />
-        <CurrentPage setPage={this.setPage} />
+        {/* <CurrentPage setPage={this.setPage} /> */}
+        <section>{PAGES[this.state.page]({ setPage: this.setPage })}</section>
       </div>
     );
   }
 }
 
-export default App;
+export default withAuth(App);
