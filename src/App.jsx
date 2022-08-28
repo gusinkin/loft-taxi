@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withAuth } from './AuthContext';
-import Header from './Header';
+import { Header } from './Header';
 import { LoginPageWithAuth } from './pages/LoginPage';
 import { MapPage } from './pages/MapPage';
 import { ProfilePageWithAuth } from './pages/ProfilePage';
-import RegPage from './pages/RegPage';
+import { RegPage } from './pages/RegPage';
+import PropTypes from 'prop-types';
 
 const PAGES = {
   login: (props) => <LoginPageWithAuth {...props} />,
@@ -31,11 +32,14 @@ class App extends Component {
     return (
       <div className='App'>
         <Header setPage={this.setPage} />
-        {/* <CurrentPage setPage={this.setPage} /> */}
         <section>{PAGES[this.state.page]({ setPage: this.setPage })}</section>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+};
 
 export default withAuth(App);

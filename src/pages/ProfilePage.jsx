@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withAuth } from '../AuthContext';
+import PropTypes from 'prop-types';
 
 class ProfilePage extends Component {
   unauthenticate = () => {
@@ -16,5 +17,10 @@ class ProfilePage extends Component {
     );
   }
 }
+
+ProfilePage.propTypes = {
+  logOut: PropTypes.func,
+  setPage: PropTypes.func,
+};
 
 export const ProfilePageWithAuth = withAuth(ProfilePage);

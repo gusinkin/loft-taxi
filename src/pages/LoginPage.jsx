@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withAuth } from '../AuthContext';
+import PropTypes from 'prop-types';
 
 class LoginPage extends Component {
   authenticate = (e) => {
@@ -14,14 +15,17 @@ class LoginPage extends Component {
     setPage('profile');
   };
 
-  render() {
+  setRegPage = () => {
     const { setPage } = this.props;
+    setPage('reg');
+  };
 
+  render() {
     return (
       <>
         {this.props.isLoggedIn ? (
           <p>
-            You are logged in{' '}
+            You are logged in
             <button onClick={this.setProfilePage}>go to profile</button>
           </p>
         ) : (
@@ -33,17 +37,22 @@ class LoginPage extends Component {
               </label>
               <label>
                 Пароль:
-                <input name='password' type='text' />
+                <input name='password' type='password' />
               </label>
               <input type='submit' value='Submit' />
             </form>
             <span>Новый пользователь?</span>
-            <button onClick={() => setPage('reg')}>Регистрация</button>
+            <button onClick={this.setRegPage}>Регистрация</button>
           </>
         )}
       </>
     );
   }
 }
+
+LoginPage.propTypes = {
+  logIn: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+};
 
 export const LoginPageWithAuth = withAuth(LoginPage);

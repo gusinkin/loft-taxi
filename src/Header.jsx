@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './svg/logo.svg';
 
-class Header extends Component {
+export class Header extends Component {
   render() {
     const { setPage } = this.props;
 
@@ -15,5 +15,3 @@ class Header extends Component {
     );
   }
 }
-
-export default Header;

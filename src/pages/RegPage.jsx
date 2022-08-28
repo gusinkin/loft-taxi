@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class RegPage extends Component {
+export class RegPage extends Component {
   setMapPage = () => {
     const { setPage } = this.props;
     setPage('map');
@@ -41,5 +41,3 @@ class RegPage extends Component {
     );
   }
 }
-
-export default RegPage;
