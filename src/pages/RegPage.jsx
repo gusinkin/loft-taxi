@@ -20,15 +20,15 @@ export class RegPage extends Component {
         <h1>Registration page</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Email:
+            Email
             <input name='email' type='text' />
           </label>
           <label>
-            Как Вас зовут?:
+            Как Вас зовут?
             <input name='userName' type='text' />
           </label>
           <label>
-            Придумайте пароль:
+            Придумайте пароль
             <input name='password' type='text' />
           </label>
           <input type='submit' value='Submit' />
