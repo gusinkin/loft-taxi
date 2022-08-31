@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/Form.css';
 
 export class RegPage extends Component {
   setMapPage = () => {
@@ -16,26 +17,43 @@ export class RegPage extends Component {
     const { setPage } = this.props;
 
     return (
-      <div>
-        <h1>Registration page</h1>
+      <div className='formWrapper'>
+        <h2 className='formName'>Регистрация</h2>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Email
-            <input name='email' type='text' />
-          </label>
-          <label>
-            Как Вас зовут?
-            <input name='userName' type='text' />
-          </label>
-          <label>
-            Придумайте пароль
-            <input name='password' type='text' />
-          </label>
-          <input type='submit' value='Submit' />
+          <div className='formRow'>
+            <label htmlFor='email'>Email*</label>
+            <input className='formInput' name='email' id='email' type='text' />
+          </div>
+          <div className='formRow'>
+            <label htmlFor='userName'>Как Вас зовут?*</label>
+            <input
+              className='formInput'
+              name='userName'
+              id='userName'
+              type='text'
+            />
+          </div>
+          <div className='formRow'>
+            <label htmlFor='password'>Придумайте пароль*</label>
+            <input
+              className='formInput'
+              name='password'
+              id='password'
+              type='text'
+            />
+          </div>
+
+          <button className='formSubmit' type='submit'>
+            Зарегистрироваться
+          </button>
         </form>
         <div>
-          <span>Уже зарегистрированы?</span>
-          <button onClick={() => setPage('login')}>Войти</button>
+          <span className='formSpan'>
+            Уже зарегистрированы?{' '}
+            <button className='navButton' onClick={() => setPage('login')}>
+              Войти
+            </button>
+          </span>
         </div>
       </div>
     );

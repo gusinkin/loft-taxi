@@ -6,8 +6,8 @@ describe('LoginPage', () => {
   describe('when logged out', () => {
     it('renders login form', () => {
       const { getByLabelText } = render(<LoginPageWithAuth />);
-      expect(getByLabelText('Email:')).toHaveAttribute('name', 'email');
-      expect(getByLabelText('Пароль:')).toHaveAttribute('name', 'password');
+      expect(getByLabelText('Email')).toHaveAttribute('name', 'email');
+      expect(getByLabelText('Пароль')).toHaveAttribute('name', 'password');
     });
   });
   describe('when logged in', () => {

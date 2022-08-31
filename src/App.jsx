@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { withAuth } from './AuthContext';
-import { Header } from './Header';
+// import { Header } from './Header';
 import { LoginPageWithAuth } from './pages/LoginPage';
 import { MapPage } from './pages/MapPage';
 import { ProfilePageWithAuth } from './pages/ProfilePage';
 import { RegPage } from './pages/RegPage';
 import PropTypes from 'prop-types';
+import headerLogo from './svg/header.svg';
+import sideBarLogo from './svg/sidebar.svg';
+import './styles/App.css';
 
 const PAGES = {
   login: (props) => <LoginPageWithAuth {...props} />,
@@ -30,10 +33,42 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
-        <Header setPage={this.setPage} />
-        <section>{PAGES[this.state.page]({ setPage: this.setPage })}</section>
-      </div>
+      <>
+        {this.state.page === 'login' || this.state.page === 'reg' ? (
+          <div className='app appWithSideBar'>
+            <div className='sideBar'>
+              <img src={sideBarLogo} className='logo' alt='logo' />
+            </div>
+            <section>
+              {PAGES[this.state.page]({ setPage: this.setPage })}
+            </section>
+          </div>
+        ) : (
+          <div className='app'>
+            <header>
+              <img src={headerLogo} className='headerLogo' alt='logo' />
+              <button className='navButton' onClick={() => this.setPage('map')}>
+                Карта
+              </button>
+              <button
+                className='navButton'
+                onClick={() => this.setPage('profile')}
+              >
+                Профиль
+              </button>
+              <button
+                className='navButton'
+                onClick={() => this.setPage('login')}
+              >
+                Логин
+              </button>
+            </header>
+            <section>
+              {PAGES[this.state.page]({ setPage: this.setPage })}
+            </section>
+          </div>
+        )}
+      </>
     );
   }
 }

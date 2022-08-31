@@ -5,12 +5,12 @@ import { render } from '@testing-library/react';
 describe('RegPage', () => {
   it('renders registration form', () => {
     const { getByLabelText } = render(<RegPage />);
-    expect(getByLabelText('Email')).toHaveAttribute('name', 'email');
-    expect(getByLabelText('Как Вас зовут?')).toHaveAttribute(
+    expect(getByLabelText('Email*')).toHaveAttribute('name', 'email');
+    expect(getByLabelText('Как Вас зовут?*')).toHaveAttribute(
       'name',
       'userName'
     );
-    expect(getByLabelText('Придумайте пароль')).toHaveAttribute(
+    expect(getByLabelText('Придумайте пароль*')).toHaveAttribute(
       'name',
       'password'
     );

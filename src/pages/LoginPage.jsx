@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAuth } from '../AuthContext';
 import PropTypes from 'prop-types';
+import '../styles/Form.css';
 
 class LoginPage extends Component {
   authenticate = (e) => {
@@ -29,21 +30,41 @@ class LoginPage extends Component {
             <button onClick={this.setProfilePage}>go to profile</button>
           </p>
         ) : (
-          <>
+          <div className='formWrapper'>
+            <h2 className='formName'>Войти</h2>
             <form onSubmit={this.authenticate}>
-              <label>
-                Email:
-                <input name='email' type='text' />
-              </label>
-              <label>
-                Пароль:
-                <input name='password' type='password' />
-              </label>
-              <input type='submit' value='Submit' />
+              <div className='formRow'>
+                <label htmlFor='email'>Email</label>
+                <input
+                  className='formInput'
+                  name='email'
+                  id='email'
+                  type='text'
+                />
+              </div>
+              <div className='formRow'>
+                <label htmlFor='password'>Пароль</label>
+                <input
+                  className='formInput'
+                  name='password'
+                  id='password'
+                  type='text'
+                />
+              </div>
+              <button className='formSubmit' type='submit'>
+                Войти
+              </button>
             </form>
-            <span>Новый пользователь?</span>
-            <button onClick={this.setRegPage}>Регистрация</button>
-          </>
+            <div>
+              {' '}
+              <span className='formSpan'>
+                Новый пользователь?{' '}
+                <button className='navButton' onClick={this.setRegPage}>
+                  Регистрация
+                </button>
+              </span>
+            </div>
+          </div>
         )}
       </>
     );
