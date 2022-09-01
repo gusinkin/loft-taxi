@@ -25,10 +25,7 @@ class LoginPage extends Component {
     return (
       <>
         {this.props.isLoggedIn ? (
-          <p>
-            You are logged in
-            <button onClick={this.setProfilePage}>go to profile</button>
-          </p>
+          this.setProfilePage()
         ) : (
           <div className='formWrapper'>
             <h2 className='formName'>Войти</h2>
