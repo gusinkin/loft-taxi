@@ -1,41 +1,76 @@
 import React, { Component } from 'react';
+import { withAuth } from '../AuthContext';
+import PropTypes from 'prop-types';
+import '../styles/Form.css';
 
 class LoginPage extends Component {
-  setMapPage = () => {
-    const { setPage } = this.props;
-    setPage('map');
+  authenticate = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target;
+    this.props.logIn(email.value, password.value);
+    this.setProfilePage();
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  setProfilePage = () => {
+    const { setPage } = this.props;
+    setPage('profile');
+  };
 
-    this.setMapPage();
+  setRegPage = () => {
+    const { setPage } = this.props;
+    setPage('reg');
   };
 
   render() {
-    const { setPage } = this.props;
-
     return (
-      <div>
-        <h1>Login page</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email:
-            <input name='email' type='text' />
-          </label>
-          <label>
-            Пароль:
-            <input name='password' type='text' />
-          </label>
-          <input type='submit' value='Submit' />
-        </form>
-        <div>
-          <span>Новый пользователь?</span>
-          <button onClick={() => setPage('reg')}>Регистрация</button>
-        </div>
-      </div>
+      <>
+        {this.props.isLoggedIn ? (
+          this.setProfilePage()
+        ) : (
+          <div className='formWrapper'>
+            <h2 className='formName'>Войти</h2>
+            <form onSubmit={this.authenticate}>
+              <div className='formRow'>
+                <label htmlFor='email'>Email</label>
+                <input
+                  className='formInput'
+                  name='email'
+                  id='email'
+                  type='text'
+                />
+              </div>
+              <div className='formRow'>
+                <label htmlFor='password'>Пароль</label>
+                <input
+                  className='formInput'
+                  name='password'
+                  id='password'
+                  type='text'
+                />
+              </div>
+              <button className='formSubmit' type='submit'>
+                Войти
+              </button>
+            </form>
+            <div>
+              {' '}
+              <span className='formSpan'>
+                Новый пользователь?{' '}
+                <button className='navButton' onClick={this.setRegPage}>
+                  Регистрация
+                </button>
+              </span>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
 }
 
-export default LoginPage;
+LoginPage.propTypes = {
+  logIn: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+};
+
+export const LoginPageWithAuth = withAuth(LoginPage);
