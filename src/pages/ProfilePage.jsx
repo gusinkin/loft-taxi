@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { withAuth } from '../AuthContext';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { logOut } from '../actions';
 
 class ProfilePage extends Component {
   unauthenticate = () => {
     this.props.logOut();
-    this.props.setPage('login');
+    // this.props.setPage('login');
   };
 
   render() {
@@ -23,4 +24,4 @@ ProfilePage.propTypes = {
   setPage: PropTypes.func,
 };
 
-export const ProfilePageWithAuth = withAuth(ProfilePage);
+export const ProfilePageWithAuth = connect(null, { logOut })(ProfilePage);
