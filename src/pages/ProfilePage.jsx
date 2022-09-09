@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logOut } from '../actions';
+import { logOut } from '../redux/auth/actions';
 
 class ProfilePage extends Component {
   unauthenticate = () => {

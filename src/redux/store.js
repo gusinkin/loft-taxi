@@ -1,7 +1,7 @@
 import rootReducer from './reducers';
 import { configureStore } from '@reduxjs/toolkit';
 // import { createStore, applyMiddleware } from 'redux';
-import { authMiddleware } from './authMiddleware';
+import { authMiddleware } from './auth/authMiddleware';
 
 export const store = configureStore({
   reducer: rootReducer,

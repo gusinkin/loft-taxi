@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Form.css';
 
 export class RegPage extends Component {
-  setMapPage = () => {
-    const { setPage } = this.props;
-    setPage('map');
-  };
+  // setMapPage = () => {
+  //   const { setPage } = this.props;
+  //   setPage('map');
+  // };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    this.setMapPage();
-  };
+  //   this.setMapPage();
+  // };
 
   render() {
-    const { setPage } = this.props;
+    // const { setPage } = this.props;
 
     return (
       <div className='formWrapper'>
@@ -50,9 +51,12 @@ export class RegPage extends Component {
         <div>
           <span className='formSpan'>
             Уже зарегистрированы?{' '}
-            <button className='navButton' onClick={() => setPage('login')}>
+            {/* <button className='navButton' onClick={() => setPage('login')}>
               Войти
-            </button>
+            </button> */}
+            <Link to='/' className='navButton'>
+              Войти
+            </Link>
           </span>
         </div>
       </div>
