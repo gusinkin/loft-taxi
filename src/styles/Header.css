@@ -1,0 +1,19 @@
+Header {
+  background-color: #1c1a19;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navList {
+  display: flex;
+  align-items: center;
+}
+
+.navList .navButton {
+  margin: 0 20px;
+}
+
+ul {
+  list-style: none;
+}

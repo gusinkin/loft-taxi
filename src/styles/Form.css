@@ -1,3 +1,15 @@
+.formPage {
+  display: flex;
+  height: 100%;
+}
+
+.formPageContent {
+  width: 66%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .formWrapper {
   display: flex;
   flex-direction: column;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { mapConfig } from '../MapConfig';
+import { Header } from '../Header';
 
 export class MapPage extends Component {
   map = null;
@@ -23,9 +24,12 @@ export class MapPage extends Component {
 
   render() {
     return (
-      <div className='map-wrapper'>
-        <div data-testid='map' className='map' ref={this.mapContainer} />
-      </div>
+      <>
+        <Header />
+        <div className='map-wrapper'>
+          <div data-testid='map' className='map' ref={this.mapContainer} />
+        </div>
+      </>
     );
   }
 }
