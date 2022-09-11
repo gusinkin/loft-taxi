@@ -25,15 +25,45 @@ form {
   margin-bottom: 15px;
 }
 
+.formHeader {
+  margin-bottom: 40px;
+}
+
 .formName {
   text-align: center;
   font-size: 30px;
   font-weight: 700;
 }
 
-.formRow {
+.formInner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* column-gap: 2%; */
+}
+
+.formColumn {
   display: flex;
   flex-direction: column;
+  width: 47%;
+}
+
+.formPage .formColumn {
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 15%;
+  margin-bottom: 15px;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 label {
@@ -49,6 +79,15 @@ label {
   outline: none;
   font-size: 18px;
   font-weight: 400;
+  width: 100%;
+}
+
+.pictureContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .formSubmit {
@@ -62,4 +101,5 @@ label {
   width: 353px;
   background-color: #fdbf5a;
   margin-bottom: 15px;
+  align-self: center;
 }

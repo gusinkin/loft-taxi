@@ -2,7 +2,8 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { setPage, reg } from '../redux/ui/actions';
+// import TextField from '@mui/material/TextField';
+import { setPage } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import '../styles/Form.css';
@@ -34,39 +35,48 @@ export const RegPage = () => {
       </div>
       <div className='formPageContent'>
         <div className='formWrapper'>
-          <h2 className='formName'>Регистрация</h2>
+          <div className='formHeader'>
+            <h2 className='formName'>Регистрация</h2>
+          </div>
           <form>
-            <div className='formRow'>
-              <label htmlFor='email'>Email*</label>
-              <input
-                className='formInput'
-                name='email'
-                id='email'
-                type='text'
-              />
+            <div className='formColumn'>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='email'>Email*</label>
+                  <input
+                    className='formInput'
+                    name='email'
+                    id='email'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='userName'>Как Вас зовут?*</label>
+                  <input
+                    className='formInput'
+                    name='userName'
+                    id='userName'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='password'>Придумайте пароль*</label>
+                  <input
+                    className='formInput'
+                    name='password'
+                    id='password'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <button className='formSubmit' type='submit'>
+                Зарегистрироваться
+              </button>
             </div>
-            <div className='formRow'>
-              <label htmlFor='userName'>Как Вас зовут?*</label>
-              <input
-                className='formInput'
-                name='userName'
-                id='userName'
-                type='text'
-              />
-            </div>
-            <div className='formRow'>
-              <label htmlFor='password'>Придумайте пароль*</label>
-              <input
-                className='formInput'
-                name='password'
-                id='password'
-                type='text'
-              />
-            </div>
-
-            <button className='formSubmit' type='submit'>
-              Зарегистрироваться
-            </button>
           </form>
           <div>
             <span className='formSpan'>

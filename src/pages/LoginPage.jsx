@@ -2,6 +2,7 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+// import TextField from '@mui/material/TextField';
 import { setPage, authenticate } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
 import '../styles/Form.css';
@@ -42,29 +43,37 @@ export const LoginPage = () => {
       </div>
       <div className='formPageContent'>
         <div className='formWrapper'>
-          <h2 className='formName'>Войти</h2>
+          <div className='formHeader'>
+            <h2 className='formName'>Войти</h2>
+          </div>
           <form onSubmit={setUser}>
-            <div className='formRow'>
-              <label htmlFor='email'>Email</label>
-              <input
-                className='formInput'
-                name='email'
-                id='email'
-                type='text'
-              />
+            <div className='formColumn'>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='email'>Email</label>
+                  <input
+                    className='formInput'
+                    name='email'
+                    id='email'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='password'>Пароль</label>
+                  <input
+                    className='formInput'
+                    name='password'
+                    id='password'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <button className='formSubmit' type='submit'>
+                Войти
+              </button>
             </div>
-            <div className='formRow'>
-              <label htmlFor='password'>Пароль</label>
-              <input
-                className='formInput'
-                name='password'
-                id='password'
-                type='text'
-              />
-            </div>
-            <button className='formSubmit' type='submit'>
-              Войти
-            </button>
           </form>
           <div>
             {' '}
