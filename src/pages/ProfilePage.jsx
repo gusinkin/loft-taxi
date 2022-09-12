@@ -34,7 +34,7 @@ export const ProfilePage = () => {
   return (
     <div>
       <Header />
-      <div className='pageContent'>
+      <div className='pageContent' data-testid='profile-page'>
         <div className='formWrapper'>
           <div className='formHeader'>
             <h2 className='formName'>Профиль</h2>

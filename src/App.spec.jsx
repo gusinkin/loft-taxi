@@ -1,33 +1,64 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import * as router from 'react-router';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { customRender } from './utils/customRender';
 import App from './App';
-// import LoginPageWithAuth from './pages/LoginPage';
-
-jest.mock('./pages/LoginPage', () => ({
-  LoginPageWithAuth: () => <div>Login Page</div>,
-}));
-jest.mock('./pages/MapPage', () => ({
-  MapPage: () => <div>Map Page</div>,
-}));
-jest.mock('./pages/ProfilePage', () => ({
-  ProfilePageWithAuth: () => <div>Profile Page</div>,
-}));
 
 describe('App', () => {
-  it('renders correctly', () => {
-    const { container } = render(<App />);
-    expect(container.innerHTML).toMatch('Login Page');
+  it('renders login form', () => {
+    customRender(<App />, {});
+    expect(screen.getByTestId('login-page')).toBeInTheDocument();
+  });
+  it('navigates to registration form and back to login form', () => {
+    customRender(<App />, {});
+    userEvent.click(screen.getByText('Регистрация'));
+    expect(screen.getByTestId('registration-page')).toBeInTheDocument();
+    userEvent.click(screen.getByText('Войти'));
+    expect(screen.getByTestId('login-page')).toBeInTheDocument();
+  });
+});
+
+describe('App login', () => {
+  const currentState = {
+    ui: {
+      page: 'login',
+      isLoggedIn: false,
+      user: {
+        email: '',
+        password: '',
+        surname: '',
+        name: '',
+      },
+    },
+  };
+
+  const navigate = jest.fn();
+
+  beforeEach(() => {
+    jest.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
   });
 
-  describe('when clicked on navigation buttons', () => {
-    it('opens the corresponding page', () => {
-      const { getByText, container } = render(<App isLoggedIn />);
-      fireEvent.click(getByText('Карта'));
-      expect(container.innerHTML).toMatch('Map Page');
-      fireEvent.click(getByText('Профиль'));
-      expect(container.innerHTML).toMatch('Profile Page');
-      fireEvent.click(getByText('Логин'));
-      expect(container.innerHTML).toMatch('Login Page');
-    });
+  it('logs in correctly', () => {
+    const { store } = customRender(<App />, currentState);
+
+    userEvent.type(screen.getByTestId('email'), 'test@test.com');
+    userEvent.type(screen.getByTestId('password'), '123123');
+
+    // expect(screen.getByTestId('email')).toHaveValue('test@test.com');
+    // expect(screen.getByTestId('password')).toHaveValue('123123');
+
+    userEvent.click(screen.getByTestId('login-btn'));
+    // TypeError: Cannot read properties of undefined (reading 'value')
+    // wtf? тесты на toHaveValue проходят
+
+    expect(navigate).toHaveBeenCalledWith('/map');
+
+    const newState = store.getState();
+    expect(newState.ui.page).toBe('map');
+    expect(newState.ui.isLoggedIn).toBe(true);
+    expect(newState.ui.user.email).toBe('test@test.com');
+    expect(newState.ui.user.password).toBe('123123');
+    // expect(newState.ui.user.name).toBe('');
+    // expect(newState.ui.user.surname).toBe('');
   });
 });

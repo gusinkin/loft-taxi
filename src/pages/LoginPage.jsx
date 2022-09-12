@@ -37,7 +37,7 @@ export const LoginPage = () => {
   }, [loggedIn, navigate, changeState]);
 
   return (
-    <div className='formPage'>
+    <div className='formPage' data-testid='login-page'>
       <div className='sideBar'>
         <img src={sideBarLogo} className='logo' alt='logo' />
       </div>
@@ -56,6 +56,7 @@ export const LoginPage = () => {
                     name='email'
                     id='email'
                     type='text'
+                    data-testid='email'
                   />
                 </div>
               </div>
@@ -67,10 +68,15 @@ export const LoginPage = () => {
                     name='password'
                     id='password'
                     type='text'
+                    data-testid='password'
                   />
                 </div>
               </div>
-              <button className='formSubmit' type='submit'>
+              <button
+                className='formSubmit'
+                type='submit'
+                data-testid='login-btn'
+              >
                 Войти
               </button>
             </div>
@@ -84,6 +90,7 @@ export const LoginPage = () => {
                   className='navButton'
                   type='button'
                   onClick={() => changeState('reg')}
+                  data-testid='new-user-btn'
                 >
                   Регистрация
                 </button>

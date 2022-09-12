@@ -28,7 +28,7 @@ export const RegPage = () => {
   }, [loggedIn, navigate, changeState]);
 
   return (
-    <div className='formPage'>
+    <div className='formPage' data-testid='registration-page'>
       {' '}
       <div className='sideBar'>
         <img src={sideBarLogo} className='logo' alt='logo' />

@@ -11,12 +11,12 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
+    <BrowserRouter>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
           <App />
-        </BrowserRouter>
-      </MuiThemeProvider>
-    </Provider>
+        </MuiThemeProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );

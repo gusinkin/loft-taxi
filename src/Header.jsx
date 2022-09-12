@@ -60,6 +60,7 @@ export const Header = () => {
           </li>
           <li>
             <button
+              data-testid='logout-btn'
               type='button'
               className='navButton'
               onClick={() => unAuth()}
