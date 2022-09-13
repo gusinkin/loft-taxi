@@ -2,7 +2,6 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Logo, MCIcon } from 'loft-taxi-mui-theme';
 import { setPage } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
 import { Header } from '../Header';
@@ -24,10 +23,10 @@ export const ProfilePage = () => {
   useEffect(() => {
     if (loggedIn) {
       navigate('/profile');
-      changeState('Profile');
+      changeState('profile');
     } else {
       navigate('/');
-      changeState('Logout');
+      changeState('login');
     }
   }, [loggedIn, navigate, changeState]);
 

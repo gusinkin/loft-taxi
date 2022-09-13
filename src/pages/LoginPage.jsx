@@ -2,7 +2,6 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import TextField from '@mui/material/TextField';
 import { setPage, authenticate } from '../redux/ui/actions';
 import { logged } from '../redux/ui/selector';
 import '../styles/Form.css';

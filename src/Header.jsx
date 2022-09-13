@@ -2,7 +2,7 @@ import { React, useCallback, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { setPage, logOut } from './redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPage, logged } from './redux/ui/selector';
+import { logged } from './redux/ui/selector';
 import { useNavigate, Link } from 'react-router-dom';
 import headerLogo from './svg/header.svg';
 import './styles/App.css';

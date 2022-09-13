@@ -1,35 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import { mapConfig } from '../MapConfig';
 import { Header } from '../Header';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
-export class MapPage extends Component {
-  map = null;
-  mapContainer = React.createRef();
+export const MapPage = () => {
+  const map = useRef();
+  const mapContainer = useRef();
 
-  componentDidMount() {
+  useEffect(() => {
     mapboxgl.accessToken = mapConfig.token;
 
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer.current,
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [43.97923, 56.311465],
       zoom: 10,
     });
-  }
 
-  componentWillUnmount() {
-    this.map.remove();
-  }
+    return () => {
+      map.current.remove();
+    };
+  }, []);
 
-  render() {
-    return (
-      <>
-        <Header />
-        <div className='map-wrapper'>
-          <div data-testid='map' className='map' ref={this.mapContainer} />
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Header />
+      <div className='map-wrapper'>
+        <div data-testid='map' className='map' ref={mapContainer} />
+      </div>
+    </>
+  );
+};
