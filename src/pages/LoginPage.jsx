@@ -14,6 +14,7 @@ export const LoginPage = () => {
 
   const setUser = (event) => {
     event.preventDefault();
+    console.log('test');
     const payload = {
       payloadEmail: event.target.email.value,
       payloadPassword: event.target.password.value,
@@ -30,6 +31,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (loggedIn) {
+      console.log('дратути');
       navigate('/map');
       changeState('map');
     }
@@ -45,7 +47,7 @@ export const LoginPage = () => {
           <div className='formHeader'>
             <h2 className='formName'>Войти</h2>
           </div>
-          <form onSubmit={setUser}>
+          <form data-testid='login-form' onSubmit={setUser}>
             <div className='formColumn'>
               <div className='formRow'>
                 <div className='formItem'>

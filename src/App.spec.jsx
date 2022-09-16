@@ -1,5 +1,6 @@
 import * as router from 'react-router';
-import { screen } from '@testing-library/react';
+import React from 'react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { customRender } from './utils/customRender';
 import App from './App';
@@ -36,6 +37,7 @@ describe('App login', () => {
 
   beforeEach(() => {
     jest.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
+    jest.spyOn(React, 'useEffect').mockImplementation((cb) => cb());
   });
 
   it('logs in correctly', () => {
@@ -43,9 +45,23 @@ describe('App login', () => {
 
     userEvent.type(screen.getByTestId('email'), 'test@test.com');
     userEvent.type(screen.getByTestId('password'), '123123');
+    // console.log(screen.getByTestId('email'));
+    // console.log(screen.getByTestId('password'));
+    // console.log(screen.getByTestId('email').value);
+    // console.log(screen.getByTestId('password').value);
+    // console.log(screen.getByTestId('login-form'));
 
     // expect(screen.getByTestId('email')).toHaveValue('test@test.com');
     // expect(screen.getByTestId('password')).toHaveValue('123123');
+
+    // fireEvent.submit(screen.getByTestId('login-form'), {
+    //   target: {
+    //     email: { value: 'test@test.com' },
+    //     password: { value: '123123' },
+    //   },
+    // });
+
+    // fireEvent.submit(screen.getByRole('login-form'))
 
     userEvent.click(screen.getByTestId('login-btn'));
     // TypeError: Cannot read properties of undefined (reading 'value')
