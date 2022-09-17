@@ -8,12 +8,14 @@ describe('Header', () => {
   const currentState = {
     ui: {
       page: 'map',
+    },
+    user: {
       isLoggedIn: true,
-      user: {
+      data: {
         email: 'test@test.com',
         password: '123123',
-        surname: 'Gusinkin',
         name: 'Dmitry',
+        surname: 'Gusinkin',
       },
     },
   };
@@ -32,10 +34,10 @@ describe('Header', () => {
 
     const newState = store.getState();
     expect(newState.ui.page).toBe('login');
-    expect(newState.ui.isLoggedIn).toBe(false);
-    expect(newState.ui.user.email).toBe('');
-    expect(newState.ui.user.password).toBe('');
-    expect(newState.ui.user.name).toBe('');
-    expect(newState.ui.user.surname).toBe('');
+    expect(newState.user.isLoggedIn).toBe(false);
+    expect(newState.user.data.email).toBe('');
+    expect(newState.user.data.password).toBe('');
+    expect(newState.user.data.name).toBe('');
+    expect(newState.user.data.surname).toBe('');
   });
 });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { logged } from '../redux/ui/selector';
+import { logged } from '../redux/user/selector';
 import { Header } from '../Header';
 import mastercard from '../svg/mastercard.svg';
 import '../styles/Form.css';

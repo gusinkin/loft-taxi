@@ -1,9 +1,10 @@
 import { React, useCallback, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
-import { setPage, logOut } from './redux/ui/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { logged } from './redux/ui/selector';
 import { useNavigate, Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import { setPage } from './redux/ui/actions';
+import { logOut } from './redux/user/actions';
+import { logged } from './redux/user/selector';
 import headerLogo from './svg/header.svg';
 import './styles/App.css';
 import './styles/Header.css';

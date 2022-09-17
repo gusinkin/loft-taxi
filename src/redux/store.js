@@ -1,13 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authMiddleware } from './ui/authMiddleware';
-
 import { combineReducers } from 'redux';
+import { authMiddleware } from './middlewares/authMiddleware';
+import { regMiddleware } from './middlewares/regMiddleware';
+import { userReducer } from './user/reducer';
 import { uiReducer } from './ui/reducer';
 
-export const rootReducers = combineReducers({ ui: uiReducer });
+export const rootReducers = combineReducers({
+  ui: uiReducer,
+  user: userReducer,
+});
 
 export const store = configureStore({
   reducer: rootReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authMiddleware),
+    getDefaultMiddleware().concat(authMiddleware).concat(regMiddleware),
 });

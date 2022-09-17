@@ -2,8 +2,9 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setPage, authenticate } from '../redux/ui/actions';
-import { logged } from '../redux/ui/selector';
+import { setPage } from '../redux/ui/actions';
+import { authenticate } from '../redux/user/actions';
+import { logged } from '../redux/user/selector';
 import '../styles/Form.css';
 import sideBarLogo from '../svg/sidebar.svg';
 
@@ -14,24 +15,29 @@ export const LoginPage = () => {
 
   const setUser = (event) => {
     event.preventDefault();
-    console.log('test');
+    console.log('setUser');
+
+    const { email, password } = event.target;
+
     const payload = {
-      payloadEmail: event.target.email.value,
-      payloadPassword: event.target.password.value,
+      payloadEmail: email.value,
+      payloadPassword: password.value,
     };
+    console.log('PAYLOAD:', payload);
     dispatch(authenticate(payload));
   };
 
   const changeState = useCallback(
     (pageName) => {
       dispatch(setPage(pageName));
+      console.log('changeState');
     },
     [dispatch]
   );
 
   useEffect(() => {
     if (loggedIn) {
-      console.log('дратути');
+      console.log('useEffect');
       navigate('/map');
       changeState('map');
     }

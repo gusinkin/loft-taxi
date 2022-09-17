@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { logged } from '../redux/ui/selector';
+import { reg } from '../redux/user/actions';
+import { logged } from '../redux/user/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import '../styles/Form.css';
 
@@ -26,9 +27,23 @@ export const RegPage = () => {
     }
   }, [loggedIn, navigate, changeState]);
 
+  const registrate = (event) => {
+    event.preventDefault();
+
+    const { email, password, name, surname } = event.target;
+
+    const payload = {
+      payloadEmail: email.value,
+      payloadPassword: password.value,
+      payloadName: name.value,
+      payloadSurname: surname.value,
+    };
+
+    dispatch(reg(payload));
+  };
+
   return (
     <div className='formPage' data-testid='registration-page'>
-      {' '}
       <div className='sideBar'>
         <img src={sideBarLogo} className='logo' alt='logo' />
       </div>
@@ -37,7 +52,7 @@ export const RegPage = () => {
           <div className='formHeader'>
             <h2 className='formName'>Регистрация</h2>
           </div>
-          <form>
+          <form onSubmit={registrate}>
             <div className='formColumn'>
               <div className='formRow'>
                 <div className='formItem'>
@@ -52,11 +67,22 @@ export const RegPage = () => {
               </div>
               <div className='formRow'>
                 <div className='formItem'>
-                  <label htmlFor='userName'>Как Вас зовут?*</label>
+                  <label htmlFor='name'>Как Вас зовут?*</label>
                   <input
                     className='formInput'
-                    name='userName'
-                    id='userName'
+                    name='name'
+                    id='name'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='surname'>Ваша фамилия*</label>
+                  <input
+                    className='formInput'
+                    name='surname'
+                    id='surname'
                     type='text'
                   />
                 </div>
