@@ -15,7 +15,7 @@ export const LoginPage = () => {
 
   const setUser = (event) => {
     event.preventDefault();
-    console.log('setUser');
+    // console.log('setUser');
 
     const { email, password } = event.target;
 
@@ -23,21 +23,21 @@ export const LoginPage = () => {
       payloadEmail: email.value,
       payloadPassword: password.value,
     };
-    console.log('PAYLOAD:', payload);
+    // console.log('PAYLOAD:', payload);
     dispatch(authenticate(payload));
   };
 
   const changeState = useCallback(
     (pageName) => {
       dispatch(setPage(pageName));
-      console.log('changeState');
+      // console.log('changeState');
     },
     [dispatch]
   );
 
   useEffect(() => {
     if (loggedIn) {
-      console.log('useEffect');
+      // console.log('useEffect');
       navigate('/map');
       changeState('map');
     }

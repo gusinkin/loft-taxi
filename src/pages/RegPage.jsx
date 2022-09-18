@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { reg } from '../redux/user/actions';
+import { register } from '../redux/user/actions';
 import { logged } from '../redux/user/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import '../styles/Form.css';
@@ -39,7 +39,7 @@ export const RegPage = () => {
       payloadSurname: surname.value,
     };
 
-    dispatch(reg(payload));
+    dispatch(register(payload));
   };
 
   return (
