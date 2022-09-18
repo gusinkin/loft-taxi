@@ -8,7 +8,5 @@ export const authRequest = async (email, password) => {
       email: email,
       password: password,
     }),
-  })
-    .then((responce) => responce.json())
-    .then((data) => data.success);
+  }).then((response) => response.json());
 };

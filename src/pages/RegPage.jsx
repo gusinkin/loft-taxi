@@ -33,10 +33,10 @@ export const RegPage = () => {
     const { email, password, name, surname } = event.target;
 
     const payload = {
-      payloadEmail: email.value,
-      payloadPassword: password.value,
-      payloadName: name.value,
-      payloadSurname: surname.value,
+      email: email.value,
+      password: password.value,
+      name: name.value,
+      surname: surname.value,
     };
 
     dispatch(register(payload));

@@ -3,13 +3,15 @@ import { register, logIn, logOut } from '../user/actions';
 import { regRequest } from '../requests/regRequest';
 
 export function* registrationSaga(action) {
-  const email = action.payload.payloadEmail;
-  const password = action.payload.payloadPassword;
-  const name = action.payload.payloadName;
-  const surname = action.payload.payloadSurname;
-  const success = yield call(regRequest, email, password, name, surname);
-  if (success) {
-    yield put(logIn({ email, password, name, surname }));
+  const email = action.payload.email;
+  const password = action.payload.password;
+  const name = action.payload.name;
+  const surname = action.payload.surname;
+  const response = yield call(regRequest, email, password, name, surname);
+  if (response.success) {
+    yield put(
+      logIn({ email, password, name, surname, authToken: response.token })
+    );
   } else {
     yield put(logOut());
   }

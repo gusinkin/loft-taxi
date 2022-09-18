@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { logged } from '../redux/user/selector';
+import { updateCard } from '../redux/payment/actions';
+import { logged, token } from '../redux/user/selector';
 import { Header } from '../Header';
 import mastercard from '../svg/mastercard.svg';
 import '../styles/Form.css';
@@ -12,6 +13,7 @@ export const ProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
+  // const authToken = useSelector(token);
 
   const changeState = useCallback(
     (pageName) => {
@@ -30,6 +32,26 @@ export const ProfilePage = () => {
     }
   }, [loggedIn, navigate, changeState]);
 
+  const submitCard = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const { cardName, cardNumber, expiryDate, cvc } = event.target;
+
+      const payload = {
+        cardName: cardName.value,
+        cardNumber: cardNumber.value,
+        expiryDate: expiryDate.value,
+        cvc: cvc.value,
+        // token: authToken,
+      };
+
+      // console.log(payload);
+      dispatch(updateCard(payload));
+    },
+    [dispatch]
+  );
+
   return (
     <div>
       <Header />
@@ -39,16 +61,16 @@ export const ProfilePage = () => {
             <h2 className='formName'>Профиль</h2>
             <p>Введите платежные данные</p>
           </div>
-          <form>
+          <form onSubmit={submitCard}>
             <div className='formInner'>
               <div className='formColumn'>
                 <div className='formRow'>
                   <div className='formItem'>
-                    <label htmlFor='cardholderName'>Имя владельца</label>
+                    <label htmlFor='cardName'>Имя владельца</label>
                     <input
                       className='formInput'
-                      name='cardholderName'
-                      id='cardholderName'
+                      name='cardName'
+                      id='cardName'
                       type='text'
                     />
                   </div>
@@ -75,11 +97,11 @@ export const ProfilePage = () => {
                     />
                   </div>
                   <div className='formItem'>
-                    <label htmlFor='CVC'>CVC</label>
+                    <label htmlFor='cvc'>CVC</label>
                     <input
                       className='formInput'
-                      name='CVC'
-                      id='CVC'
+                      name='cvc'
+                      id='cvc'
                       type='text'
                     />
                   </div>

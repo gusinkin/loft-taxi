@@ -10,7 +10,5 @@ export const regRequest = async (email, password, name, surname) => {
       name: name,
       surname: surname,
     }),
-  })
-    .then((responce) => responce.json())
-    .then((data) => data.success);
+  }).then((response) => response.json());
 };
