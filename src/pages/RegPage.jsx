@@ -1,61 +1,131 @@
-import React, { Component } from 'react';
+import { React, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import { setPage } from '../redux/ui/actions';
+import { reg } from '../redux/user/actions';
+import { logged } from '../redux/user/selector';
+import sideBarLogo from '../svg/sidebar.svg';
 import '../styles/Form.css';
 
-export class RegPage extends Component {
-  setMapPage = () => {
-    const { setPage } = this.props;
-    setPage('map');
+export const RegPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(logged);
+
+  const changeState = useCallback(
+    (pageName) => {
+      dispatch(setPage(pageName));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/map');
+      changeState('map');
+    }
+  }, [loggedIn, navigate, changeState]);
+
+  const registrate = (event) => {
+    event.preventDefault();
+
+    const { email, password, name, surname } = event.target;
+
+    const payload = {
+      payloadEmail: email.value,
+      payloadPassword: password.value,
+      payloadName: name.value,
+      payloadSurname: surname.value,
+    };
+
+    dispatch(reg(payload));
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    this.setMapPage();
-  };
-
-  render() {
-    const { setPage } = this.props;
-
-    return (
-      <div className='formWrapper'>
-        <h2 className='formName'>Регистрация</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div className='formRow'>
-            <label htmlFor='email'>Email*</label>
-            <input className='formInput' name='email' id='email' type='text' />
+  return (
+    <div className='formPage' data-testid='registration-page'>
+      <div className='sideBar'>
+        <img src={sideBarLogo} className='logo' alt='logo' />
+      </div>
+      <div className='formPageContent'>
+        <div className='formWrapper'>
+          <div className='formHeader'>
+            <h2 className='formName'>Регистрация</h2>
           </div>
-          <div className='formRow'>
-            <label htmlFor='userName'>Как Вас зовут?*</label>
-            <input
-              className='formInput'
-              name='userName'
-              id='userName'
-              type='text'
-            />
+          <form onSubmit={registrate}>
+            <div className='formColumn'>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='email'>Email*</label>
+                  <input
+                    className='formInput'
+                    name='email'
+                    id='email'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='name'>Как Вас зовут?*</label>
+                  <input
+                    className='formInput'
+                    name='name'
+                    id='name'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='surname'>Ваша фамилия*</label>
+                  <input
+                    className='formInput'
+                    name='surname'
+                    id='surname'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <div className='formRow'>
+                <div className='formItem'>
+                  <label htmlFor='password'>Придумайте пароль*</label>
+                  <input
+                    className='formInput'
+                    name='password'
+                    id='password'
+                    type='text'
+                  />
+                </div>
+              </div>
+              <button className='formSubmit' type='submit'>
+                Зарегистрироваться
+              </button>
+            </div>
+          </form>
+          <div>
+            <span className='formSpan'>
+              Уже зарегистрированы?{' '}
+              <Link to='/'>
+                <button
+                  className='navButton'
+                  type='button'
+                  onClick={() => changeState('login')}
+                >
+                  Войти
+                </button>
+              </Link>
+            </span>
           </div>
-          <div className='formRow'>
-            <label htmlFor='password'>Придумайте пароль*</label>
-            <input
-              className='formInput'
-              name='password'
-              id='password'
-              type='text'
-            />
-          </div>
-
-          <button className='formSubmit' type='submit'>
-            Зарегистрироваться
-          </button>
-        </form>
-        <div>
-          <span className='formSpan'>
-            Уже зарегистрированы?{' '}
-            <button className='navButton' onClick={() => setPage('login')}>
-              Войти
-            </button>
-          </span>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+RegPage.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func,
+  changeState: PropTypes.func,
+};

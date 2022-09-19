@@ -6,14 +6,6 @@
   background-image: url('../images/bg-map.png');
 }
 
-.appWithSideBar {
-  flex-direction: row;
-}
-
-Header {
-  background-color: #1c1a19;
-}
-
 /* .headerLogo {
 } */
 
@@ -33,10 +25,13 @@ Header {
   align-items: center;
   justify-content: center;
 }
+.mapboxgl-control-container {
+  display: none;
+}
 
-.appWithSideBar section {
-  width: 66%;
+.pageContent {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 90vh;
 }

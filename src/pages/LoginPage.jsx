@@ -1,76 +1,118 @@
-import React, { Component } from 'react';
-import { withAuth } from '../AuthContext';
+import { React, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { setPage } from '../redux/ui/actions';
+import { authenticate } from '../redux/user/actions';
+import { logged } from '../redux/user/selector';
 import '../styles/Form.css';
+import sideBarLogo from '../svg/sidebar.svg';
 
-class LoginPage extends Component {
-  authenticate = (e) => {
-    e.preventDefault();
-    const { email, password } = e.target;
-    this.props.logIn(email.value, password.value);
-    this.setProfilePage();
+export const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(logged);
+
+  const setUser = (event) => {
+    event.preventDefault();
+    console.log('setUser');
+
+    const { email, password } = event.target;
+
+    const payload = {
+      payloadEmail: email.value,
+      payloadPassword: password.value,
+    };
+    console.log('PAYLOAD:', payload);
+    dispatch(authenticate(payload));
   };
 
-  setProfilePage = () => {
-    const { setPage } = this.props;
-    setPage('profile');
-  };
+  const changeState = useCallback(
+    (pageName) => {
+      dispatch(setPage(pageName));
+      console.log('changeState');
+    },
+    [dispatch]
+  );
 
-  setRegPage = () => {
-    const { setPage } = this.props;
-    setPage('reg');
-  };
+  useEffect(() => {
+    if (loggedIn) {
+      console.log('useEffect');
+      navigate('/map');
+      changeState('map');
+    }
+  }, [loggedIn, navigate, changeState]);
 
-  render() {
-    return (
-      <>
-        {this.props.isLoggedIn ? (
-          this.setProfilePage()
-        ) : (
-          <div className='formWrapper'>
+  return (
+    <div className='formPage' data-testid='login-page'>
+      <div className='sideBar'>
+        <img src={sideBarLogo} className='logo' alt='logo' />
+      </div>
+      <div className='formPageContent'>
+        <div className='formWrapper'>
+          <div className='formHeader'>
             <h2 className='formName'>Войти</h2>
-            <form onSubmit={this.authenticate}>
+          </div>
+          <form data-testid='login-form' onSubmit={setUser}>
+            <div className='formColumn'>
               <div className='formRow'>
-                <label htmlFor='email'>Email</label>
-                <input
-                  className='formInput'
-                  name='email'
-                  id='email'
-                  type='text'
-                />
+                <div className='formItem'>
+                  <label htmlFor='email'>Email</label>
+                  <input
+                    className='formInput'
+                    name='email'
+                    id='email'
+                    type='text'
+                    data-testid='email'
+                  />
+                </div>
               </div>
               <div className='formRow'>
-                <label htmlFor='password'>Пароль</label>
-                <input
-                  className='formInput'
-                  name='password'
-                  id='password'
-                  type='text'
-                />
+                <div className='formItem'>
+                  <label htmlFor='password'>Пароль</label>
+                  <input
+                    className='formInput'
+                    name='password'
+                    id='password'
+                    type='text'
+                    data-testid='password'
+                  />
+                </div>
               </div>
-              <button className='formSubmit' type='submit'>
+              <button
+                className='formSubmit'
+                type='submit'
+                data-testid='login-btn'
+              >
                 Войти
               </button>
-            </form>
-            <div>
-              {' '}
-              <span className='formSpan'>
-                Новый пользователь?{' '}
-                <button className='navButton' onClick={this.setRegPage}>
+            </div>
+          </form>
+          <div>
+            {' '}
+            <span className='formSpan'>
+              Новый пользователь?{' '}
+              <Link to='/reg'>
+                <button
+                  className='navButton'
+                  type='button'
+                  onClick={() => changeState('reg')}
+                  data-testid='new-user-btn'
+                >
                   Регистрация
                 </button>
-              </span>
-            </div>
+              </Link>
+            </span>
           </div>
-        )}
-      </>
-    );
-  }
-}
-
-LoginPage.propTypes = {
-  logIn: PropTypes.func,
-  isLoggedIn: PropTypes.bool,
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export const LoginPageWithAuth = withAuth(LoginPage);
+LoginPage.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logIn: PropTypes.func,
+  logOut: PropTypes.func,
+  changeState: PropTypes.func,
+};
