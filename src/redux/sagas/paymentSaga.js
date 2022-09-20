@@ -3,13 +3,13 @@ import { updateCard, getCard, saveCard } from '../payment/actions';
 import { updateCardRequest } from '../requests/updateCardRequest';
 import { getCardRequest } from '../requests/getCardRequest';
 
-export function* getCardDataSaga(action) {
+function* getCardDataSaga(action) {
   const data = action.payload;
   const success = yield call(getCardRequest, data);
 
   if (success) {
-    console.log('data received');
-    console.log(success, success.cardName);
+    // console.log('data received');
+    // console.log(success, success.cardName);
     yield put(saveCard(success));
   }
 }
@@ -18,7 +18,7 @@ export function* getCardSaga() {
   yield takeEvery(getCard, getCardDataSaga);
 }
 
-export function* updateCardDataSaga(action) {
+function* updateCardDataSaga(action) {
   const { cardNumber, expiryDate, cardName, cvc } = action.payload;
   const success = yield call(
     updateCardRequest,
@@ -27,12 +27,12 @@ export function* updateCardDataSaga(action) {
     cardName,
     cvc
   );
-  console.log(success);
+  // console.log(success);
   if (success) {
     yield put(getCard());
-    console.log('card data updated');
+    // console.log('card data updated');
   } else {
-    console.log('card data NOT UPDATED');
+    alert('Не удалось обновить платежные данные');
   }
 }
 

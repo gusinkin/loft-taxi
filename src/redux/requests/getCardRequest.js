@@ -4,5 +4,5 @@ export const getCardRequest = async (data) => {
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((responce) => responce.json());
+  }).then((response) => response.json());
 };

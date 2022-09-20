@@ -5,11 +5,13 @@ import { userReducer } from './user/reducer';
 import { uiReducer } from './ui/reducer';
 import { paymentReducer } from './payment/reducer';
 import { rootSaga } from './sagas/rootSaga';
+import { orderReducer } from './order/reducer';
 
 export const rootReducers = combineReducers({
   ui: uiReducer,
   user: userReducer,
   payment: paymentReducer,
+  order: orderReducer,
 });
 
 export const sagaMiddleware = createSagaMiddleware();
