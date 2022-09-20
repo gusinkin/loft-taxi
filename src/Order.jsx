@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPage } from './redux/ui/actions';
 import { hasCard } from './redux/payment/selector';
+import './styles/Popup.css';
 
 export const Order = () => {
   const userHasCard = useSelector(hasCard);
@@ -15,10 +16,12 @@ export const Order = () => {
     [dispatch]
   );
   const orderPlaced = false;
-  if (userHasCard) {
+  if (!userHasCard) {
     return (
       <div className='popUp'>
-        <div className=''>Не заполнены платежные данные</div>
+        <div className='formHeader'>
+          <p>Не заполнены платежные данные</p>
+        </div>
         <Link to='/profile'>
           <button
             type='button'
@@ -40,7 +43,12 @@ export const Order = () => {
     } else {
       return (
         <div className='popUp'>
-          <div className=''> такси прибудет через 10 минут</div>
+          <div className='formHeader'>
+            <h2 className='formName'>Заказ размещен</h2>
+            <p>
+              Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
+            </p>
+          </div>
           <button
             type='button'
             className='formSubmit'
