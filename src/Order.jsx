@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Select, MenuItem } from '@mui/material';
 import { setPage } from './redux/ui/actions';
-import { placeOrder } from './redux/order/actions';
+import { placeOrder, getRoute, setRoute } from './redux/order/actions';
 import { hasCard } from './redux/payment/selector';
 import { addressList, orderPlaced } from './redux/order/selector';
 import './styles/Popup.css';
 
 export const Order = () => {
+  const dispatch = useDispatch();
   const userHasCard = useSelector(hasCard);
   const addresses = useSelector(addressList);
-  const dispatch = useDispatch();
   const isOrderPlaced = useSelector(orderPlaced);
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
@@ -46,15 +46,21 @@ export const Order = () => {
   const submitOrder = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch(placeOrder(true));
+      if (address1 && address2) {
+        dispatch(placeOrder(true));
+        dispatch(getRoute({ address1, address2 }));
+      } else {
+        alert('Выберите начальную и конечную точки');
+      }
     },
-    [dispatch]
+    [dispatch, address1, address2]
   );
 
   const refresh = useCallback(
     (event) => {
       event.preventDefault();
       dispatch(placeOrder(false));
+      dispatch(setRoute([]));
     },
     [dispatch]
   );

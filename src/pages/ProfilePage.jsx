@@ -48,7 +48,6 @@ export const ProfilePage = () => {
         // token: authToken,
       };
 
-      // console.log(payload);
       dispatch(updateCard(payload));
     },
     [dispatch]

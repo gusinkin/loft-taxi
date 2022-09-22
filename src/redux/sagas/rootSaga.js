@@ -3,6 +3,7 @@ import { authSaga } from './authSaga';
 import { regSaga } from './regSaga';
 import { updateCardSaga, getCardSaga } from './paymentSaga';
 import { addressListSaga } from './addressListSaga';
+import { routeSaga } from './routeSaga';
 
 export function* rootSaga() {
   yield all([
@@ -11,5 +12,6 @@ export function* rootSaga() {
     fork(updateCardSaga),
     fork(getCardSaga),
     fork(addressListSaga),
+    fork(routeSaga),
   ]);
 }

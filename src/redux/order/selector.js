@@ -9,3 +9,4 @@ export const orderPlaced = createSelector(
   selectOrder,
   (order) => order.orderPlaced
 );
+export const coords = createSelector(selectOrder, (order) => order.coords);

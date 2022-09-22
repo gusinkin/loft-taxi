@@ -8,8 +8,6 @@ function* getCardDataSaga(action) {
   const success = yield call(getCardRequest, data);
 
   if (success) {
-    // console.log('data received');
-    // console.log(success, success.cardName);
     yield put(saveCard(success));
   }
 }
@@ -27,10 +25,8 @@ function* updateCardDataSaga(action) {
     cardName,
     cvc
   );
-  // console.log(success);
   if (success) {
     yield put(getCard());
-    // console.log('card data updated');
   } else {
     alert('Не удалось обновить платежные данные');
   }

@@ -7,10 +7,7 @@ function* getAddressListSaga(action) {
   const success = yield call(getAddressListRequest, data);
 
   if (success) {
-    // console.log('data received');
-    // console.log(success);
     yield put(saveAddressList(success));
-    // yield console.log(success);
   }
 }
 
