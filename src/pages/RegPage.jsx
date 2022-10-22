@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { reg } from '../redux/user/actions';
+import { register } from '../redux/user/actions';
 import { logged } from '../redux/user/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import '../styles/Form.css';
@@ -33,13 +33,13 @@ export const RegPage = () => {
     const { email, password, name, surname } = event.target;
 
     const payload = {
-      payloadEmail: email.value,
-      payloadPassword: password.value,
-      payloadName: name.value,
-      payloadSurname: surname.value,
+      email: email.value,
+      password: password.value,
+      name: name.value,
+      surname: surname.value,
     };
 
-    dispatch(reg(payload));
+    dispatch(register(payload));
   };
 
   return (

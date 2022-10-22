@@ -1,9 +1,11 @@
 import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setPage } from '../redux/ui/actions';
-import { logged } from '../redux/user/selector';
+import { updateCard } from '../redux/payment/actions';
+import { logged, token } from '../redux/user/selector';
+import { hasCard } from '../redux/payment/selector';
 import { Header } from '../Header';
 import mastercard from '../svg/mastercard.svg';
 import '../styles/Form.css';
@@ -12,6 +14,8 @@ export const ProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
+  const userHasCard = useSelector(hasCard);
+  // const authToken = useSelector(token);
 
   const changeState = useCallback(
     (pageName) => {
@@ -30,81 +34,127 @@ export const ProfilePage = () => {
     }
   }, [loggedIn, navigate, changeState]);
 
-  return (
-    <div>
-      <Header />
-      <div className='pageContent' data-testid='profile-page'>
-        <div className='formWrapper'>
-          <div className='formHeader'>
-            <h2 className='formName'>Профиль</h2>
-            <p>Введите платежные данные</p>
-          </div>
-          <form>
-            <div className='formInner'>
-              <div className='formColumn'>
-                <div className='formRow'>
-                  <div className='formItem'>
-                    <label htmlFor='cardholderName'>Имя владельца</label>
-                    <input
-                      className='formInput'
-                      name='cardholderName'
-                      id='cardholderName'
-                      type='text'
-                    />
-                  </div>
-                </div>
-                <div className='formRow'>
-                  <div className='formItem'>
-                    <label htmlFor='cardNumber'>Номер карты</label>
-                    <input
-                      className='formInput'
-                      name='cardNumber'
-                      id='cardNumber'
-                      type='text'
-                    />
-                  </div>
-                </div>
-                <div className='formRow'>
-                  <div className='formItem'>
-                    <label htmlFor='expiryDate'>MM/YY</label>
-                    <input
-                      className='formInput'
-                      name='expiryDate'
-                      id='expiryDate'
-                      type='text'
-                    />
-                  </div>
-                  <div className='formItem'>
-                    <label htmlFor='CVC'>CVC</label>
-                    <input
-                      className='formInput'
-                      name='CVC'
-                      id='CVC'
-                      type='text'
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className='formColumn'>
-                <div className='pictureContainer'>
-                  <img
-                    src={mastercard}
-                    className='cardPicture'
-                    alt='mastercard'
-                  />
-                </div>{' '}
-              </div>
+  const submitCard = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const { cardName, cardNumber, expiryDate, cvc } = event.target;
+
+      const payload = {
+        cardName: cardName.value,
+        cardNumber: cardNumber.value,
+        expiryDate: expiryDate.value,
+        cvc: cvc.value,
+        // token: authToken,
+      };
+
+      dispatch(updateCard(payload));
+    },
+    [dispatch]
+  );
+
+  if (userHasCard) {
+    return (
+      <div>
+        <Header />
+        <div className='pageContent' data-testid='profile-page'>
+          <div className='formWrapper'>
+            <div className='formHeader'>
+              <h2 className='formName'>Профиль</h2>
+              <p>
+                Платёжные данные обновлены. Теперь вы можете заказывать такси.
+              </p>
             </div>
-            <button className='formSubmit' type='submit'>
-              Сохранить
-            </button>
-          </form>
+            <Link to='/map'>
+              <button
+                type='button'
+                className='formSubmit'
+                onClick={() => changeState('map')}
+              >
+                Перейти на карту
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-      {/* <MCIcon />
-      <Logo /> */}
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <Header />
+        <div className='pageContent' data-testid='profile-page'>
+          <div className='formWrapper'>
+            <div className='formHeader'>
+              <h2 className='formName'>Профиль</h2>
+              <p>Введите платежные данные</p>
+            </div>
+            <form onSubmit={submitCard}>
+              <div className='formInner'>
+                <div className='formColumn'>
+                  <div className='formRow'>
+                    <div className='formItem'>
+                      <label htmlFor='cardName'>Имя владельца</label>
+                      <input
+                        className='formInput'
+                        name='cardName'
+                        id='cardName'
+                        type='text'
+                      />
+                    </div>
+                  </div>
+                  <div className='formRow'>
+                    <div className='formItem'>
+                      <label htmlFor='cardNumber'>Номер карты</label>
+                      <input
+                        className='formInput'
+                        name='cardNumber'
+                        id='cardNumber'
+                        type='text'
+                      />
+                    </div>
+                  </div>
+                  <div className='formRow'>
+                    <div className='formItem'>
+                      <label htmlFor='expiryDate'>MM/YY</label>
+                      <input
+                        className='formInput'
+                        name='expiryDate'
+                        id='expiryDate'
+                        type='text'
+                      />
+                    </div>
+                    <div className='formItem'>
+                      <label htmlFor='cvc'>CVC</label>
+                      <input
+                        className='formInput'
+                        name='cvc'
+                        id='cvc'
+                        type='text'
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className='formColumn'>
+                  <div className='pictureContainer'>
+                    <img
+                      src={mastercard}
+                      className='cardPicture'
+                      alt='mastercard'
+                    />
+                  </div>{' '}
+                </div>
+              </div>
+              <button className='formSubmit' type='submit'>
+                Сохранить
+              </button>
+            </form>
+          </div>
+        </div>
+        {/* <MCIcon />
+    <Logo /> */}
+      </div>
+    );
+  }
 };
 
 ProfilePage.propTypes = {
