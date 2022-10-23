@@ -8,6 +8,8 @@ function* getRouteSaga(action) {
 
   if (response) {
     yield put(setRoute(response));
+  } else {
+    alert('Не удалось получить маршрут с сервера');
   }
 }
 

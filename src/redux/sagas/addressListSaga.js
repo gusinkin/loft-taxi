@@ -8,6 +8,8 @@ function* getAddressListSaga(action) {
 
   if (response) {
     yield put(saveAddressList(response));
+  } else {
+    alert('Не удалось получить список адресов с сервера');
   }
 }
 
