@@ -4,10 +4,10 @@ import { getAddressListRequest } from '../requests/getAddressRequest';
 
 function* getAddressListSaga(action) {
   const data = action.payload;
-  const success = yield call(getAddressListRequest, data);
+  const response = yield call(getAddressListRequest, data);
 
-  if (success) {
-    yield put(saveAddressList(success));
+  if (response) {
+    yield put(saveAddressList(response));
   }
 }
 

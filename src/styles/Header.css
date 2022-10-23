@@ -1,16 +1,16 @@
-Header {
+.header {
   background-color: #1c1a19;
   height: 10vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.navList {
+.header__list {
   display: flex;
   align-items: center;
 }
 
-.navList .navButton {
+.header__list .button {
   margin: 0 20px;
 }
 

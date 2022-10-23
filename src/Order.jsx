@@ -9,14 +9,21 @@ import { addressList, orderPlaced } from './redux/order/selector';
 import './styles/Popup.css';
 
 export const Order = () => {
-  const dispatch = useDispatch();
   const userHasCard = useSelector(hasCard);
+  const dispatch = useDispatch();
+
+  //=======================================================
+  // const navigate = useNavigate();
   const addresses = useSelector(addressList);
   const isOrderPlaced = useSelector(orderPlaced);
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [addressList1, setAddressList1] = useState(addresses);
   const [addressList2, setAddressList2] = useState(addresses);
+  // const options = ['Стандарт', 'Премиум', 'Бизнесс'];
+  // const cost = ['150', '250', '300'];
+  // const cars = [picCar1, picCar2, picCar3];
+  // const [active, setActive] = useState('');
 
   useEffect(() => {
     setAddressList1(addresses);
@@ -56,6 +63,7 @@ export const Order = () => {
     [dispatch, address1, address2]
   );
 
+  //=======================================================
   const refresh = useCallback(
     (event) => {
       event.preventDefault();
@@ -78,6 +86,7 @@ export const Order = () => {
       value={address1}
       onChange={submitAddress1}
       displayEmpty
+      // inputProps={{ 'aria-label': 'Without label' }}
       className='popupInput'
     >
       <MenuItem value='' disabled selected>
@@ -97,6 +106,7 @@ export const Order = () => {
       value={address2}
       onChange={submitAddress2}
       displayEmpty
+      // inputProps={{ 'aria-label': 'Without label' }}
       className='popupInput'
     >
       <MenuItem value='' disabled selected>

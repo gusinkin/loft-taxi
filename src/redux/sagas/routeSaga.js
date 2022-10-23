@@ -4,10 +4,10 @@ import { getRouteRequest } from '../requests/getRouteRequest';
 
 function* getRouteSaga(action) {
   const data = action.payload;
-  const success = yield call(getRouteRequest, data);
+  const response = yield call(getRouteRequest, data);
 
-  if (success) {
-    yield put(setRoute(success));
+  if (response) {
+    yield put(setRoute(response));
   }
 }
 

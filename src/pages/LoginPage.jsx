@@ -90,7 +90,7 @@ export const LoginPage = () => {
               Новый пользователь?{' '}
               <Link to='/reg'>
                 <button
-                  className='navButton'
+                  className='button'
                   type='button'
                   onClick={() => changeState('reg')}
                   data-testid='new-user-btn'

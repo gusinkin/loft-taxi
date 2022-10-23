@@ -5,10 +5,24 @@ import { getCardRequest } from '../requests/getCardRequest';
 
 function* getCardDataSaga(action) {
   const data = action.payload;
-  const success = yield call(getCardRequest, data);
+  const response = yield call(getCardRequest, data);
 
-  if (success) {
-    yield put(saveCard(success));
+  if (
+    response.cardName &&
+    response.cardNumber &&
+    response.expiryDate &&
+    response.cvc
+  ) {
+    yield put(saveCard(response));
+  } else if (response.success === false) {
+    console.log(
+      'Не удалось получить платежные данные с сервера, ОШИБКА: ',
+      response.error
+    );
+  } else {
+    console.log(
+      'Не удалось получить платежные данные с сервера, НЕИЗВЕСТНАЯ ОШИБКА'
+    );
   }
 }
 
@@ -17,18 +31,27 @@ export function* getCardSaga() {
 }
 
 function* updateCardDataSaga(action) {
-  const { cardNumber, expiryDate, cardName, cvc } = action.payload;
-  const success = yield call(
+  const { cardNumber, expiryDate, cardName, cvc, token } = action.payload;
+  const response = yield call(
     updateCardRequest,
     cardNumber,
     expiryDate,
     cardName,
-    cvc
+    cvc,
+    token
   );
-  if (success) {
-    yield put(getCard());
+  if (response.success === true) {
+    yield put(getCard(token));
+  } else if (response.success === false) {
+    alert('Не удалось загрузить платежные данные на сервер');
+    console.log(
+      'Не удалось загрузить платежные данные на сервер, ОШИБКА: ',
+      response.error
+    );
   } else {
-    alert('Не удалось обновить платежные данные');
+    console.log(
+      'Не удалось загрузить платежные данные на сервер, НЕИЗВЕСТНАЯ ОШИБКА'
+    );
   }
 }
 

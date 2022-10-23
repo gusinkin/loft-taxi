@@ -33,15 +33,15 @@ export const Header = () => {
   }, [loggedIn, navigate]);
 
   return (
-    <header>
-      <img src={headerLogo} className='headerLogo' alt='logo' />
+    <header className='header'>
+      <img src={headerLogo} className='header__logo' alt='logo' />
       <nav>
-        <ul className='navList'>
+        <ul className='header__list'>
           <li>
             <Link to='/map'>
               <button
                 type='button'
-                className='navButton'
+                className='header__button button'
                 onClick={() => changeState('map')}
               >
                 Карта
@@ -52,7 +52,7 @@ export const Header = () => {
             <Link to='/profile'>
               <button
                 type='button'
-                className='navButton'
+                className='header__button button'
                 onClick={() => changeState('profile')}
               >
                 Профиль
@@ -63,7 +63,7 @@ export const Header = () => {
             <button
               data-testid='logout-btn'
               type='button'
-              className='navButton'
+              className='header__button button'
               onClick={() => unAuth()}
             >
               Выйти

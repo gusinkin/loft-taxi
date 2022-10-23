@@ -108,7 +108,7 @@ export const RegPage = () => {
               Уже зарегистрированы?{' '}
               <Link to='/'>
                 <button
-                  className='navButton'
+                  className='button'
                   type='button'
                   onClick={() => changeState('login')}
                 >
