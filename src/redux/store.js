@@ -23,7 +23,7 @@ export const store = configureStore({
   reducer: rootReducers,
   preloadedState: persistedState,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({}).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);
@@ -33,6 +33,5 @@ store.subscribe(() => {
     ui: store.getState().ui,
     user: store.getState().user,
     payment: store.getState().payment,
-    order: store.getState().order,
   });
 });

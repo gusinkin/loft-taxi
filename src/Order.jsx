@@ -126,7 +126,7 @@ export const Order = () => {
         <div className='formHeader'>
           <p>Не заполнены платежные данные</p>
         </div>
-        <Link to='/profile'>
+        <Link to='/main/profile'>
           <button
             type='button'
             className='formSubmit'

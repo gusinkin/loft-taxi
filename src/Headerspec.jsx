@@ -7,7 +7,7 @@ import { Header } from './Header';
 describe('Header', () => {
   const currentState = {
     ui: {
-      page: 'map',
+      page: 'order',
     },
     user: {
       isLoggedIn: true,

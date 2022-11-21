@@ -23,14 +23,16 @@ export const Header = () => {
 
   const unAuth = () => {
     dispatch(logOut());
+    navigate('/');
     changeState('login');
   };
 
   useEffect(() => {
     if (!loggedIn) {
       navigate('/');
+      changeState('login');
     }
-  }, [loggedIn, navigate]);
+  }, [loggedIn, navigate, changeState]);
 
   return (
     <header className='header'>
@@ -38,18 +40,18 @@ export const Header = () => {
       <nav>
         <ul className='header__list'>
           <li>
-            <Link to='/map'>
+            <Link to='/main/order'>
               <button
                 type='button'
                 className='header__button button'
-                onClick={() => changeState('map')}
+                onClick={() => changeState('order')}
               >
                 Карта
               </button>
             </Link>
           </li>
           <li>
-            <Link to='/profile'>
+            <Link to='/main/profile'>
               <button
                 type='button'
                 className='header__button button'

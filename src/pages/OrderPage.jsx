@@ -1,15 +1,14 @@
 // import { React } from 'react';
 // import { Header } from '../Header';
 // import { Map } from '../Map';
-// import { Profile } from '../Profile';
-// import '../styles/Form.css';
+// import { Order } from '../Order';
 
-// export const ProfilePage = () => {
+// export const OrderPage = () => {
 //   return (
-//     <div className='profile-page'>
+//     <div className='map-page'>
 //       <Header />
 //       <Map />
-//       <Profile />
+//       <Order />
 //     </div>
 //   );
 // };

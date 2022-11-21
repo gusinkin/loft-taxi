@@ -1,6 +1,6 @@
 import { React, useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setPage } from './redux/ui/actions';
 import { updateCard } from './redux/payment/actions';
@@ -10,7 +10,6 @@ import mastercard from './svg/mastercard.svg';
 import './styles/Form.css';
 
 export const Profile = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
   const currentCardData = useSelector(cardData);
@@ -45,16 +44,6 @@ export const Profile = () => {
     [dispatch]
   );
 
-  useEffect(() => {
-    if (loggedIn) {
-      navigate('/profile');
-      changeState('profile');
-    } else {
-      navigate('/');
-      changeState('login');
-    }
-  }, [loggedIn, navigate, changeState]);
-
   const submitCard = useCallback(
     (event) => {
       event.preventDefault();
@@ -84,11 +73,11 @@ export const Profile = () => {
           <h2 className='formName'>Профиль</h2>
           <p>Платёжные данные обновлены. Теперь вы можете заказывать такcи.</p>
         </div>
-        <Link to='/map'>
+        <Link to='/main/order'>
           <button
             type='button'
             className='formSubmit'
-            onClick={() => changeState('map')}
+            onClick={() => changeState('order')}
           >
             Перейти на карту
           </button>

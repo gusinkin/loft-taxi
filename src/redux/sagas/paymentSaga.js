@@ -1,6 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { updateCard, getCard, saveCard } from '../payment/actions';
-import { getAddressList } from '../order/actions';
 import { updateCardRequest } from '../requests/updateCardRequest';
 import { getCardRequest } from '../requests/getCardRequest';
 
@@ -15,7 +14,6 @@ function* getCardDataSaga(action) {
     response.cvc
   ) {
     yield put(saveCard(response));
-    yield put(getAddressList());
   } else if (response.success === false) {
     console.log(
       'Не удалось получить платежные данные с сервера, ОШИБКА: ',

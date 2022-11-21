@@ -42,10 +42,10 @@ describe('LoginPage', () => {
       },
     });
 
-    expect(navigate).toHaveBeenCalledWith('/map');
+    expect(navigate).toHaveBeenCalledWith('/order');
 
     const newState = store.getState();
-    expect(newState.ui.page).toBe('map');
+    expect(newState.ui.page).toBe('order');
     expect(newState.user.isLoggedIn).toBe(true);
     expect(newState.user.data.email).toBe('test@test.com');
     expect(newState.user.data.password).toBe('123123');

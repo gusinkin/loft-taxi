@@ -1,22 +1,20 @@
-import { React, memo, useEffect, useRef, useCallback } from 'react';
+import { React, useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import mapboxgl from 'mapbox-gl';
-import { setPage } from './redux/ui/actions';
-import { logged } from './redux/user/selector';
+import { mapContext } from './context/MapProvider';
 import { coords } from './redux/order/selector';
+import mapboxgl from 'mapbox-gl';
 import { mapConfig } from './MapConfig';
+import { getAddressList } from './redux/order/actions';
 
-const Mp = () => {
-  const mapContainer = useRef();
-  const navigate = useNavigate();
+export const Map = () => {
+  const mapContainer = useRef(null);
+  const { savedMap, setSavedMap } = useContext(mapContext);
   const dispatch = useDispatch();
-  const loggedIn = useSelector(logged);
   const coordinates = useSelector(coords);
 
-  useEffect(() => {
-    mapboxgl.accessToken = mapConfig.token;
+  mapboxgl.accessToken = mapConfig.token;
 
+  useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -24,14 +22,24 @@ const Mp = () => {
       zoom: 10,
     });
 
-    map.on('load', () => {
+    setSavedMap(map);
+
+    dispatch(getAddressList());
+
+    return () => {
+      setSavedMap(null);
+      map.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (savedMap) {
       if (coordinates.length !== 0) {
-        map.flyTo({
+        savedMap.flyTo({
           center: coordinates[0],
           zoom: 15,
         });
-
-        map.addLayer({
+        savedMap.addLayer({
           id: 'route',
           type: 'line',
           source: {
@@ -41,7 +49,7 @@ const Mp = () => {
               properties: {},
               geometry: {
                 type: 'LineString',
-                coordinates: coordinates,
+                coordinates,
               },
             },
           },
@@ -55,31 +63,17 @@ const Mp = () => {
           },
         });
       } else {
-        map.removeSource('route');
+        if (savedMap.getSource('route')) {
+          savedMap.flyTo({
+            center: [30.3056504, 59.9429126],
+            zoom: 10,
+          });
+          savedMap.removeLayer('route');
+          savedMap.removeSource('route');
+        }
       }
-    });
-
-    return () => {
-      map.remove();
-    };
-  }, [coordinates]);
-
-  const changeState = useCallback(
-    (pageName) => {
-      dispatch(setPage(pageName));
-    },
-    [dispatch]
-  );
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate('/map');
-      changeState('map');
-    } else {
-      navigate('/');
-      changeState('login');
     }
-  }, [loggedIn, navigate, changeState]);
+  }, [savedMap, coordinates]);
 
   return (
     <div className='map-wrapper'>
@@ -87,5 +81,3 @@ const Mp = () => {
     </div>
   );
 };
-
-export const Map = memo(Mp);
