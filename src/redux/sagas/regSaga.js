@@ -4,6 +4,7 @@ import { setLoading } from '../ui/actions';
 import { regRequest } from '../requests/regRequest';
 
 export function* registrationSaga(action) {
+  yield put(setLoading(true));
   const email = action.payload.email;
   const password = action.payload.password;
   const name = action.payload.name;

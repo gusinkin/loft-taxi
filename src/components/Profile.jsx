@@ -2,12 +2,13 @@ import { React, useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setPage } from './redux/ui/actions';
-import { updateCard } from './redux/payment/actions';
-import { logged, token } from './redux/user/selector';
-import { cardData } from './redux/payment/selector';
-import mastercard from './svg/mastercard.svg';
-import './styles/Form.css';
+import { setPage } from '../redux/ui/actions';
+import { updateCard } from '../redux/payment/actions';
+import { logged, token } from '../redux/user/selector';
+import { cardData } from '../redux/payment/selector';
+import mastercard from '../svg/mastercard.svg';
+import styled from 'styled-components';
+import * as S from '../pages/styles';
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -68,64 +69,61 @@ export const Profile = () => {
   if (submited) {
     return (
       // Платёжные данные обновлены. Перейти на карту
-      <div className='formWrapper popup'>
-        <div className='formHeader'>
-          <h2 className='formName'>Профиль</h2>
-          <p>Платёжные данные обновлены. Теперь вы можете заказывать такcи.</p>
-        </div>
-        <Link to='/main/order'>
-          <button
-            type='button'
-            className='formSubmit'
-            onClick={() => changeState('order')}
-          >
-            Перейти на карту
-          </button>
-        </Link>
-      </div>
+      <MainPageContent>
+        <S.Form>
+          <S.FormHeader>
+            <S.FormName>Профиль</S.FormName>
+            <p>
+              Платёжные данные обновлены. Теперь вы можете заказывать такcи.
+            </p>
+          </S.FormHeader>
+          <Link to='/main/order'>
+            <S.FormSubmit type='button' onClick={() => changeState('order')}>
+              Перейти на карту
+            </S.FormSubmit>
+          </Link>
+        </S.Form>
+      </MainPageContent>
     );
   } else {
     return (
       // форма ввода данных карты
-      <div className='formWrapper popup'>
-        <div className='formHeader'>
-          <h2 className='formName'>Профиль</h2>
-          <p>Введите платежные данные</p>
-        </div>
-        <form onSubmit={submitCard}>
-          <div className='formInner'>
-            <div className='formColumn'>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='cardName'>Имя владельца</label>
-                  <input
-                    className='formInput'
+      <MainPageContent>
+        <S.Form onSubmit={submitCard}>
+          <S.FormHeader>
+            <S.FormName>Профиль</S.FormName>
+            <p>Введите платежные данные</p>
+          </S.FormHeader>
+          <S.FormInner>
+            <S.FormColumn>
+              <S.FormRow>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='cardName'>Имя владельца</S.FormLabel>
+                  <S.FormInput
                     name='cardName'
                     id='cardName'
                     type='text'
                     value={cardName}
                     onChange={(e) => setCardName(e.target.value)}
                   />
-                </div>
-              </div>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='cardNumber'>Номер карты</label>
-                  <input
-                    className='formInput'
+                </S.FormItem>
+              </S.FormRow>
+              <S.FormRow>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='cardNumber'>Номер карты</S.FormLabel>
+                  <S.FormInput
                     name='cardNumber'
                     id='cardNumber'
                     type='text'
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}
                   />
-                </div>
-              </div>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='expiryDate'>MM/YY</label>
-                  <input
-                    className='formInput'
+                </S.FormItem>
+              </S.FormRow>
+              <S.FormRow>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='expiryDate'>MM/YY</S.FormLabel>
+                  <S.FormInput
                     name='expiryDate'
                     id='expiryDate'
                     type='text'
@@ -134,11 +132,10 @@ export const Profile = () => {
                       setExpiryDate(e.target.value);
                     }}
                   />
-                </div>
-                <div className='formItem'>
-                  <label htmlFor='cvc'>CVC</label>
-                  <input
-                    className='formInput'
+                </S.FormItem>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='cvc'>CVC</S.FormLabel>
+                  <S.FormInput
                     name='cvc'
                     id='cvc'
                     type='text'
@@ -147,24 +144,18 @@ export const Profile = () => {
                       setCvc(e.target.value);
                     }}
                   />
-                </div>
-              </div>
-            </div>
-            <div className='formColumn'>
-              <div className='pictureContainer'>
-                <img
-                  src={mastercard}
-                  className='cardPicture'
-                  alt='mastercard'
-                />
-              </div>{' '}
-            </div>
-          </div>
-          <button className='formSubmit' type='submit'>
-            Сохранить
-          </button>
-        </form>
-      </div>
+                </S.FormItem>
+              </S.FormRow>
+            </S.FormColumn>
+            <S.FormColumn>
+              <PictureContainer>
+                <img src={mastercard} alt='mastercard' />
+              </PictureContainer>
+            </S.FormColumn>
+          </S.FormInner>
+          <S.FormSubmit type='submit'>Сохранить</S.FormSubmit>
+        </S.Form>
+      </MainPageContent>
     );
   }
 };
@@ -173,3 +164,23 @@ Profile.propTypes = {
   logOut: PropTypes.func,
   setPage: PropTypes.func,
 };
+
+const MainPageContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  height: 90%;
+`;
+
+const PictureContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;

@@ -1,4 +1,4 @@
-import { React, useMemo, useEffect, useCallback } from 'react';
+import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -6,9 +6,9 @@ import { setPage, setLoading } from '../redux/ui/actions';
 import { authenticate } from '../redux/user/actions';
 import { logged } from '../redux/user/selector';
 import { loading } from '../redux/ui/selector';
-import '../styles/Form.css';
 import sideBarLogo from '../svg/sidebar.svg';
 import loadingAnim from '../images/loading.gif';
+import * as S from './styles';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -16,9 +16,14 @@ export const LoginPage = () => {
   const loggedIn = useSelector(logged);
   const isLoading = useSelector(loading);
 
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(setLoading(false));
+    }
+  }, []);
+
   const setUser = (event) => {
     event.preventDefault();
-    dispatch(setLoading(true));
 
     const { email, password } = event.target;
 
@@ -43,151 +48,64 @@ export const LoginPage = () => {
     }
   }, [loggedIn, navigate, changeState]);
 
-  const formPageClassName = useMemo(
-    () => (isLoading ? 'formPage loading' : 'formPage'),
-    [isLoading]
-  );
-
-  // if (isLoading) {
   return (
-    <div className={formPageClassName} data-testid='login-page'>
-      {isLoading && (
-        <div className='animation'>
-          <img className='anim' src={loadingAnim} alt='loading' />
-        </div>
-      )}
-      <>
-        <div className='sideBar'>
-          <img src={sideBarLogo} className='logo' alt='logo' />
-        </div>
-        <div className='formPageContent'>
-          <div className='formWrapper'>
-            <div className='formHeader'>
-              <h2 className='formName'>Войти</h2>
-            </div>
-            <form data-testid='login-form' onSubmit={setUser}>
-              <div className='formColumn'>
-                <div className='formRow'>
-                  <div className='formItem'>
-                    <label htmlFor='email'>Email</label>
-                    <input
-                      className='formInput'
-                      name='email'
-                      id='email'
-                      type='text'
-                      data-testid='email'
-                    />
-                  </div>
-                </div>
-                <div className='formRow'>
-                  <div className='formItem'>
-                    <label htmlFor='password'>Пароль</label>
-                    <input
-                      className='formInput'
-                      name='password'
-                      id='password'
-                      type='text'
-                      data-testid='password'
-                    />
-                  </div>
-                </div>
-                <button
-                  className='formSubmit'
-                  type='submit'
-                  data-testid='login-btn'
-                >
-                  Войти
-                </button>
-              </div>
-            </form>
-            <div>
-              {' '}
-              <span className='formSpan'>
-                Новый пользователь?{' '}
-                <Link to='/reg'>
-                  <button
-                    className='button'
-                    type='button'
-                    onClick={() => changeState('reg')}
-                    data-testid='new-user-btn'
-                  >
-                    Регистрация
-                  </button>
-                </Link>
-              </span>
-            </div>
-          </div>
-        </div>
-      </>
-    </div>
+    <S.Page loading={isLoading ? 1 : 0} data-testid='login-page'>
+      <S.Spinner loading={isLoading ? 1 : 0}>
+        <img src={loadingAnim} alt='loading' />
+      </S.Spinner>
+      <S.SideBar>
+        <img src={sideBarLogo} alt='logo' />
+      </S.SideBar>
+      <S.LoginPageContent>
+        <S.Form data-testid='login-form' onSubmit={setUser}>
+          <S.FormHeader>
+            <S.FormName>Войти</S.FormName>
+          </S.FormHeader>
+          <S.FormInner>
+            <S.FormColumn>
+              <S.FormRow>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='email'>Email</S.FormLabel>
+                  <S.FormInput
+                    name='email'
+                    id='email'
+                    type='text'
+                    data-testid='email'
+                  />
+                </S.FormItem>
+              </S.FormRow>
+              <S.FormRow>
+                <S.FormItem>
+                  <S.FormLabel htmlFor='password'>Пароль</S.FormLabel>
+                  <S.FormInput
+                    name='password'
+                    id='password'
+                    type='text'
+                    data-testid='password'
+                  />
+                </S.FormItem>
+              </S.FormRow>
+            </S.FormColumn>
+          </S.FormInner>
+          <S.FormSubmit type='submit' data-testid='login-btn'>
+            Войти
+          </S.FormSubmit>
+          <span>
+            Новый пользователь?{' '}
+            <Link to='/reg'>
+              <S.Button
+                type='button'
+                onClick={() => changeState('reg')}
+                data-testid='new-user-btn'
+              >
+                Регистрация
+              </S.Button>
+            </Link>
+          </span>
+        </S.Form>
+      </S.LoginPageContent>
+    </S.Page>
   );
-  // }
-
-  // return (
-  //   <div className='formPage' data-testid='login-page'>
-  //     <div className='sideBar'>
-  //       <img src={sideBarLogo} className='logo' alt='logo' />
-  //     </div>
-  //     <div className='formPageContent'>
-  //       <div className='formWrapper'>
-  //         <div className='formHeader'>
-  //           <h2 className='formName'>Войти</h2>
-  //         </div>
-  //         <form data-testid='login-form' onSubmit={setUser}>
-  //           <div className='formColumn'>
-  //             <div className='formRow'>
-  //               <div className='formItem'>
-  //                 <label htmlFor='email'>Email</label>
-  //                 <input
-  //                   className='formInput'
-  //                   name='email'
-  //                   id='email'
-  //                   type='text'
-  //                   data-testid='email'
-  //                 />
-  //               </div>
-  //             </div>
-  //             <div className='formRow'>
-  //               <div className='formItem'>
-  //                 <label htmlFor='password'>Пароль</label>
-  //                 <input
-  //                   className='formInput'
-  //                   name='password'
-  //                   id='password'
-  //                   type='text'
-  //                   data-testid='password'
-  //                 />
-  //               </div>
-  //             </div>
-  //             <button
-  //               className='formSubmit'
-  //               type='submit'
-  //               data-testid='login-btn'
-  //             >
-  //               Войти
-  //             </button>
-  //           </div>
-  //         </form>
-  //         <div>
-  //           {' '}
-  //           <span className='formSpan'>
-  //             Новый пользователь?{' '}
-  //             <Link to='/reg'>
-  //               <button
-  //                 className='button'
-  //                 type='button'
-  //                 onClick={() => changeState('reg')}
-  //                 data-testid='new-user-btn'
-  //               >
-  //                 Регистрация
-  //               </button>
-  //             </Link>
-  //           </span>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 LoginPage.propTypes = {

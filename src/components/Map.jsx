@@ -1,10 +1,11 @@
 import { React, useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapContext } from './context/MapProvider';
-import { coords } from './redux/order/selector';
+import { mapContext } from '../context/MapProvider';
+import { coords } from '../redux/order/selector';
 import mapboxgl from 'mapbox-gl';
-import { mapConfig } from './MapConfig';
-import { getAddressList } from './redux/order/actions';
+import { mapConfig } from '../MapConfig';
+import { getAddressList } from '../redux/order/actions';
+import styled from 'styled-components';
 
 export const Map = () => {
   const mapContainer = useRef(null);
@@ -76,8 +77,22 @@ export const Map = () => {
   }, [savedMap, coordinates]);
 
   return (
-    <div className='map-wrapper'>
-      <div data-testid='map' className='map' ref={mapContainer} />
-    </div>
+    <MapWrapper>
+      <MapItem data-testid='map' ref={mapContainer} />
+    </MapWrapper>
   );
 };
+
+const MapWrapper = styled.div`
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+`;
+const MapItem = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+`;

@@ -2,15 +2,16 @@ import { React, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { setPage } from './redux/ui/actions';
-import { logOut } from './redux/user/actions';
-import { logged } from './redux/user/selector';
-import headerLogo from './svg/header.svg';
-import './styles/App.css';
-import './styles/Header.css';
+import { setPage } from '../redux/ui/actions';
+import { logOut } from '../redux/user/actions';
+import { page } from '../redux/ui/selector';
+import { logged } from '../redux/user/selector';
+import headerLogo from '../svg/header.svg';
+import * as S from './styles';
 
 export const Header = () => {
   const navigate = useNavigate();
+  const currentPage = useSelector(page);
   const loggedIn = useSelector(logged);
   const dispatch = useDispatch();
 
@@ -35,45 +36,44 @@ export const Header = () => {
   }, [loggedIn, navigate, changeState]);
 
   return (
-    <header className='header'>
-      <img src={headerLogo} className='header__logo' alt='logo' />
+    <S.Header>
+      <img src={headerLogo} alt='logo' />
       <nav>
-        <ul className='header__list'>
+        <S.HeaderList>
           <li>
             <Link to='/main/order'>
-              <button
+              <S.HeaderButton
                 type='button'
-                className='header__button button'
+                active={currentPage === 'order' ? true : false}
                 onClick={() => changeState('order')}
               >
                 Карта
-              </button>
+              </S.HeaderButton>
             </Link>
           </li>
           <li>
             <Link to='/main/profile'>
-              <button
+              <S.HeaderButton
                 type='button'
-                className='header__button button'
+                active={currentPage === 'profile' ? true : false}
                 onClick={() => changeState('profile')}
               >
                 Профиль
-              </button>
+              </S.HeaderButton>
             </Link>
           </li>
           <li>
-            <button
+            <S.HeaderButton
               data-testid='logout-btn'
               type='button'
-              className='header__button button'
               onClick={() => unAuth()}
             >
               Выйти
-            </button>
+            </S.HeaderButton>
           </li>
-        </ul>
+        </S.HeaderList>
       </nav>
-    </header>
+    </S.Header>
   );
 };
 

@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { LoginPage } from './pages/LoginPage';
 import { RegPage } from './pages/RegPage';
 import { MainPage } from './pages/MainPage';
-import { Order } from './Order';
-import { Profile } from './Profile';
-import './styles/App.css';
+import { Order } from './components/Order';
+import { Profile } from './components/Profile';
+import bg from './images/bg-map.png';
+import styled from 'styled-components';
 
 const App = () => {
   return (
-    <div className='app'>
+    <StyledApp background={bg}>
       <Routes>
         <Route index element={<LoginPage />} />
         <Route path='/reg' element={<RegPage />} />
@@ -19,7 +20,7 @@ const App = () => {
           <Route path='profile' element={<Profile />} />
         </Route>
       </Routes>
-    </div>
+    </StyledApp>
   );
 };
 
@@ -27,4 +28,8 @@ App.propTypes = {
   isLoggedIn: PropTypes.bool,
 };
 
+const StyledApp = styled.div`
+  height: 100vh;
+  background-image: url(${bg});
+`;
 export default App;
