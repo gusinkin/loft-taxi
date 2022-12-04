@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { getRoute, setRoute } from '../order/actions';
+import { getRoute, setRoute } from '../store/order/actions';
 import { getRouteRequest } from '../requests/getRouteRequest';
 
 function* getRouteSaga(action) {

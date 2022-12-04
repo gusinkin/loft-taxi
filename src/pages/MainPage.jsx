@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Map } from '../components/Map';
 import { MapProvider } from '../context/MapProvider';
-import { token } from '../redux/user/selector';
-import { page } from '../redux/ui/selector';
-import { getCard } from '../redux/payment/actions';
+import { token } from '../redux/store/user/selector';
+import { page } from '../redux/store/ui/selector';
+import { getCard } from '../redux/store/payment/actions';
 import styled from 'styled-components';
 
 export const MainPage = () => {
@@ -30,9 +30,6 @@ export const MainPage = () => {
 };
 
 const StyledMainPage = styled.div`
-  /* display: flex;
-flex-direction: column; */
-  /* это чтобы при сужении хедер убирать */
   &:after {
     content: '';
     position: absolute;
@@ -40,6 +37,7 @@ flex-direction: column; */
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 4;
     width: 100%;
     height: 90%;
     background: rgba(0, 0, 0, 0.4);

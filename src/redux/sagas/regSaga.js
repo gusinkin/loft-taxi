@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { register, logIn, logOut } from '../user/actions';
-import { setLoading } from '../ui/actions';
+import { register, logIn, logOut } from '../store/user/actions';
+import { setLoading } from '../store/ui/actions';
 import { regRequest } from '../requests/regRequest';
 
 export function* registrationSaga(action) {

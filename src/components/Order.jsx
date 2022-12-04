@@ -2,15 +2,15 @@ import { React, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Select, MenuItem } from '@mui/material';
-import { setPage } from '../redux/ui/actions';
-import { placeOrder, getRoute, setRoute } from '../redux/order/actions';
-import { hasCard } from '../redux/payment/selector';
-import { addressList, orderPlaced } from '../redux/order/selector';
+import { setPage } from '../redux/store/ui/actions';
+import { placeOrder, getRoute, setRoute } from '../redux/store/order/actions';
+import { hasCard } from '../redux/store/payment/selector';
+import { addressList, orderPlaced } from '../redux/store/order/selector';
 import car1 from '../images/car1.png';
 import car2 from '../images/car2.png';
 import car3 from '../images/car3.png';
 import styled from 'styled-components';
-import * as S from '../pages/styles';
+import * as S from './FormStyles';
 
 export const Order = () => {
   const userHasCard = useSelector(hasCard);
@@ -190,12 +190,19 @@ export const Order = () => {
 
 const PopupContainer = styled.div`
   position: absolute;
-  /* top: ${({ down }) => (down ? '30%' : '15%')}; */
   top: 15%;
-  left: 5vh;
-  z-index: 1;
+  left: min(calc(((100vw - 800px) / 10) + 8px), 5vh);
+  z-index: auto;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  @media (max-width: 800px) {
+    top: 10%;
+    left: 0;
+    width: 100%;
+    height: 90%;
+    justify-content: space-between;
+  }
 `;
 
 const Popup = styled.div`
@@ -204,13 +211,31 @@ const Popup = styled.div`
   background-color: #fff;
   align-items: center;
   border-radius: 20px;
-  padding: 30px 50px;
+  z-index: 10;
+  padding: min(calc(((100vw - 800px) / 20) + 20px), 40px);
+  &:nth-child(2) {
+    margin-top: -35px;
+    box-shadow: 0px 0px 20px -5px rgb(0 0 0 / 25%);
+  }
+  &:last-child {
+    @media (max-width: 800px) {
+      margin-top: auto;
+    }
+  }
+  @media (max-width: 800px) {
+    margin: 10px min(calc(((100vw - 400px) / 5) + 10px), 10px);
+    padding: min(calc(((100vw - 400px) / 5) + 10px), 10px);
+    border-radius: 10px;
+  }
 `;
 
 const SelectBlock = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 800px) {
+    margin-bottom: 0;
+  }
 `;
 
 const OptionsBlock = styled.div`
@@ -220,16 +245,19 @@ const OptionsBlock = styled.div`
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 30px;
+  @media (max-width: 800px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const OptionCard = styled.li`
   display: flex;
   flex-direction: column;
   max-width: 118px;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 12px;
+  padding: 10px;
   cursor: pointer;
   opacity: ${({ optionName, nowActive }) =>
     optionName === nowActive ? 1 : 0.5};
@@ -247,27 +275,35 @@ const OptionName = styled.span`
   color: #000000;
   margin-bottom: 8px;
 `;
+
 const OptionText = styled.span`
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
   color: #828282;
 `;
+
 const OptionPrice = styled.span`
   font-weight: 400;
   font-size: 24px;
   line-height: 28px;
   color: #000000;
 `;
+
 const OptionImage = styled.div`
   width: 94px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
 `;
+
 const OptionPic = styled.img`
   width: 100%;
   object-fit: none;
 `;
 
 const MySelect = styled(Select)`
-  margin-bottom: 20px;
-  width: 353px;
+  margin-bottom: 10px;
+  min-width: 362px;
 `;

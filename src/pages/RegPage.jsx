@@ -2,13 +2,14 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { setPage, setLoading } from '../redux/ui/actions';
-import { register } from '../redux/user/actions';
-import { logged } from '../redux/user/selector';
-import { loading } from '../redux/ui/selector';
+import { setPage, setLoading } from '../redux/store/ui/actions';
+import { register } from '../redux/store/user/actions';
+import { logged } from '../redux/store/user/selector';
+import { loading } from '../redux/store/ui/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import loadingAnim from '../images/loading.gif';
-import * as S from './styles';
+import { Page, Spinner, SideBar, LoginPageContent, Button } from './LoginPage';
+import * as S from '../components/FormStyles';
 
 export const RegPage = () => {
   const navigate = useNavigate();
@@ -52,60 +53,56 @@ export const RegPage = () => {
   }, [loggedIn, navigate, changeState]);
 
   return (
-    <S.Page loading={isLoading} data-testid='registration-page'>
-      <S.Spinner loading={isLoading}>
+    <Page loading={isLoading} data-testid='registration-page'>
+      <Spinner loading={isLoading}>
         <img src={loadingAnim} alt='loading' />
-      </S.Spinner>
-      <S.SideBar>
+      </Spinner>
+      <SideBar>
         <img src={sideBarLogo} alt='logo' />
-      </S.SideBar>
-      <S.LoginPageContent>
+      </SideBar>
+      <LoginPageContent>
         <S.Form onSubmit={registrate}>
           <S.FormHeader>
             <S.FormName>Регистрация</S.FormName>
           </S.FormHeader>
-          <S.FormInner>
-            <S.FormColumn>
-              <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='email'>Email*</S.FormLabel>
-                  <S.FormInput name='email' id='email' type='text' />
-                </S.FormItem>
-              </S.FormRow>
-              <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='name'>Как Вас зовут?*</S.FormLabel>
-                  <S.FormInput name='name' id='name' type='text' />
-                </S.FormItem>
-              </S.FormRow>
-              <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='name'>Ваша фамилия*</S.FormLabel>
-                  <S.FormInput name='surname' id='surname' type='text' />
-                </S.FormItem>
-              </S.FormRow>
-              <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='password'>
-                    Придумайте пароль*
-                  </S.FormLabel>
-                  <S.FormInput name='password' id='password' type='text' />
-                </S.FormItem>
-              </S.FormRow>
-            </S.FormColumn>
-          </S.FormInner>
+          <S.FormColumn>
+            <S.FormRow>
+              <S.FormItem>
+                <S.FormLabel htmlFor='email'>Email*</S.FormLabel>
+                <S.FormInput name='email' id='email' type='text' />
+              </S.FormItem>
+            </S.FormRow>
+            <S.FormRow>
+              <S.FormItem>
+                <S.FormLabel htmlFor='name'>Как Вас зовут?*</S.FormLabel>
+                <S.FormInput name='name' id='name' type='text' />
+              </S.FormItem>
+            </S.FormRow>
+            <S.FormRow>
+              <S.FormItem>
+                <S.FormLabel htmlFor='name'>Ваша фамилия*</S.FormLabel>
+                <S.FormInput name='surname' id='surname' type='text' />
+              </S.FormItem>
+            </S.FormRow>
+            <S.FormRow>
+              <S.FormItem>
+                <S.FormLabel htmlFor='password'>Придумайте пароль*</S.FormLabel>
+                <S.FormInput name='password' id='password' type='text' />
+              </S.FormItem>
+            </S.FormRow>
+          </S.FormColumn>
           <S.FormSubmit type='submit'>Зарегистрироваться</S.FormSubmit>
           <span>
             Уже зарегистрированы?{' '}
             <Link to='/'>
-              <S.Button type='button' onClick={() => changeState('login')}>
+              <Button type='button' onClick={() => changeState('login')}>
                 Войти
-              </S.Button>
+              </Button>
             </Link>
           </span>
         </S.Form>
-      </S.LoginPageContent>
-    </S.Page>
+      </LoginPageContent>
+    </Page>
   );
 };
 

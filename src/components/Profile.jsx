@@ -2,13 +2,13 @@ import { React, useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setPage } from '../redux/ui/actions';
-import { updateCard } from '../redux/payment/actions';
-import { logged, token } from '../redux/user/selector';
-import { cardData } from '../redux/payment/selector';
+import { setPage } from '../redux/store/ui/actions';
+import { updateCard } from '../redux/store/payment/actions';
+import { logged, token } from '../redux/store/user/selector';
+import { cardData } from '../redux/store/payment/selector';
 import mastercard from '../svg/mastercard.svg';
 import styled from 'styled-components';
-import * as S from '../pages/styles';
+import * as S from './FormStyles';
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ export const Profile = () => {
     return (
       // форма ввода данных карты
       <MainPageContent>
-        <S.Form onSubmit={submitCard}>
+        <ProfileForm onSubmit={submitCard}>
           <S.FormHeader>
             <S.FormName>Профиль</S.FormName>
             <p>Введите платежные данные</p>
@@ -154,7 +154,7 @@ export const Profile = () => {
             </S.FormColumn>
           </S.FormInner>
           <S.FormSubmit type='submit'>Сохранить</S.FormSubmit>
-        </S.Form>
+        </ProfileForm>
       </MainPageContent>
     );
   }
@@ -169,12 +169,24 @@ const MainPageContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 5;
-
+  z-index: 10;
   position: absolute;
   top: 10%;
   width: 100%;
   height: 90%;
+`;
+
+const ProfileForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: min(calc(((100vw - 800px) / 20) + 10px), 40px)
+    min(calc(((100vw - 800px) / 10) + 10px), 80px);
+  @media (max-width: 800px) {
+    padding: 20px;
+  }
 `;
 
 const PictureContainer = styled.div`
@@ -183,4 +195,9 @@ const PictureContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  @media (max-width: 800px) {
+    @media (max-height: 800px) {
+      display: none;
+    }
+  }
 `;

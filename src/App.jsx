@@ -6,8 +6,8 @@ import { RegPage } from './pages/RegPage';
 import { MainPage } from './pages/MainPage';
 import { Order } from './components/Order';
 import { Profile } from './components/Profile';
-import bg from './images/bg-map.png';
 import styled from 'styled-components';
+import bg from './images/bg-map.png';
 
 const App = () => {
   return (

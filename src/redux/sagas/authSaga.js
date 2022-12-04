@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { authenticate, logIn, logOut } from '../user/actions';
-import { setLoading } from '../ui/actions';
+import { authenticate, logIn, logOut } from '../store/user/actions';
+import { setLoading } from '../store/ui/actions';
 import { authRequest } from '../requests/authRequest';
 // import { getCard } from '../payment/actions';
 

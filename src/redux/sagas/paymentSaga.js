@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { updateCard, getCard, saveCard } from '../payment/actions';
+import { updateCard, getCard, saveCard } from '../store/payment/actions';
 import { updateCardRequest } from '../requests/updateCardRequest';
 import { getCardRequest } from '../requests/getCardRequest';
 

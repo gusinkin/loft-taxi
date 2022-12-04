@@ -1,10 +1,10 @@
 import { React, useEffect, useRef, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapContext } from '../context/MapProvider';
-import { coords } from '../redux/order/selector';
 import mapboxgl from 'mapbox-gl';
 import { mapConfig } from '../MapConfig';
-import { getAddressList } from '../redux/order/actions';
+import { mapContext } from '../context/MapProvider';
+import { coords } from '../redux/store/order/selector';
+import { getAddressList } from '../redux/store/order/actions';
 import styled from 'styled-components';
 
 export const Map = () => {
@@ -95,4 +95,5 @@ const MapItem = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 2;
 `;

@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { getAddressList, saveAddressList } from '../order/actions';
+import { getAddressList, saveAddressList } from '../store/order/actions';
 import { getAddressListRequest } from '../requests/getAddressRequest';
 
 function* getAddressListSaga(action) {

@@ -4,9 +4,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './user/reducer';
 import { uiReducer } from './ui/reducer';
 import { paymentReducer } from './payment/reducer';
-import { rootSaga } from './sagas/rootSaga';
+import { rootSaga } from '../sagas/rootSaga';
 import { orderReducer } from './order/reducer';
-import { loadState, saveState } from '../LocalStorage';
+import { loadState, saveState } from '../../LocalStorage';
 
 export const rootReducers = combineReducers({
   ui: uiReducer,
