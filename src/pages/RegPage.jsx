@@ -8,6 +8,7 @@ import { logged } from '../redux/store/user/selector';
 import { loading } from '../redux/store/ui/selector';
 import sideBarLogo from '../svg/sidebar.svg';
 import loadingAnim from '../images/loading.gif';
+import TextField from '@mui/material/TextField';
 import { Page, Spinner, SideBar, LoginPageContent, Button } from './LoginPage';
 import * as S from '../components/FormStyles';
 
@@ -67,31 +68,49 @@ export const RegPage = () => {
           </S.FormHeader>
           <S.FormColumn>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='email'>Email*</S.FormLabel>
-                <S.FormInput name='email' id='email' type='text' />
-              </S.FormItem>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Email'
+                type='email'
+                id='email'
+                placeholder='mail@mail.ru'
+              ></TextField>
             </S.FormRow>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='name'>Как Вас зовут?*</S.FormLabel>
-                <S.FormInput name='name' id='name' type='text' />
-              </S.FormItem>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Ваше имя'
+                type='text'
+                id='name'
+                placeholder='Александр'
+              ></TextField>
             </S.FormRow>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='name'>Ваша фамилия*</S.FormLabel>
-                <S.FormInput name='surname' id='surname' type='text' />
-              </S.FormItem>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Ваша фамилия'
+                type='text'
+                id='surname'
+                placeholder='Пушкин'
+              ></TextField>
             </S.FormRow>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='password'>Придумайте пароль*</S.FormLabel>
-                <S.FormInput name='password' id='password' type='text' />
-              </S.FormItem>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Придумайте пароль'
+                type='password'
+                id='password'
+                placeholder='********'
+              ></TextField>
             </S.FormRow>
           </S.FormColumn>
-          <S.FormSubmit type='submit'>Зарегистрироваться</S.FormSubmit>
+          <S.FormSubmit login={true} type='submit'>
+            Зарегистрироваться
+          </S.FormSubmit>
           <span>
             Уже зарегистрированы?{' '}
             <Link to='/'>

@@ -7,6 +7,7 @@ import { updateCard } from '../redux/store/payment/actions';
 import { logged, token } from '../redux/store/user/selector';
 import { cardData } from '../redux/store/payment/selector';
 import mastercard from '../svg/mastercard.svg';
+import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import * as S from './FormStyles';
 
@@ -14,7 +15,6 @@ export const Profile = () => {
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
   const currentCardData = useSelector(cardData);
-  // const userHasCard = useSelector(hasCard);
   const authToken = useSelector(token);
 
   const [submited, setSubmited] = useState(false);
@@ -68,8 +68,7 @@ export const Profile = () => {
 
   if (submited) {
     return (
-      // Платёжные данные обновлены. Перейти на карту
-      <MainPageContent>
+      <ProfilePageContent>
         <S.Form>
           <S.FormHeader>
             <S.FormName>Профиль</S.FormName>
@@ -83,12 +82,11 @@ export const Profile = () => {
             </S.FormSubmit>
           </Link>
         </S.Form>
-      </MainPageContent>
+      </ProfilePageContent>
     );
   } else {
     return (
-      // форма ввода данных карты
-      <MainPageContent>
+      <ProfilePageContent>
         <ProfileForm onSubmit={submitCard}>
           <S.FormHeader>
             <S.FormName>Профиль</S.FormName>
@@ -97,54 +95,50 @@ export const Profile = () => {
           <S.FormInner>
             <S.FormColumn>
               <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='cardName'>Имя владельца</S.FormLabel>
-                  <S.FormInput
-                    name='cardName'
-                    id='cardName'
-                    type='text'
-                    value={cardName}
-                    onChange={(e) => setCardName(e.target.value)}
-                  />
-                </S.FormItem>
+                <TextField
+                  fullWidth
+                  variant='standard'
+                  label='Имя владельца'
+                  id='cardName'
+                  type='text'
+                  value={cardName}
+                  onChange={(e) => setCardName(e.target.value)}
+                ></TextField>
               </S.FormRow>
               <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='cardNumber'>Номер карты</S.FormLabel>
-                  <S.FormInput
-                    name='cardNumber'
-                    id='cardNumber'
-                    type='text'
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                  />
-                </S.FormItem>
+                <TextField
+                  fullWidth
+                  variant='standard'
+                  label='Номер карты'
+                  id='cardNumber'
+                  type='text'
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                ></TextField>
               </S.FormRow>
               <S.FormRow>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='expiryDate'>MM/YY</S.FormLabel>
-                  <S.FormInput
-                    name='expiryDate'
-                    id='expiryDate'
-                    type='text'
-                    value={expiryDate}
-                    onChange={(e) => {
-                      setExpiryDate(e.target.value);
-                    }}
-                  />
-                </S.FormItem>
-                <S.FormItem>
-                  <S.FormLabel htmlFor='cvc'>CVC</S.FormLabel>
-                  <S.FormInput
-                    name='cvc'
-                    id='cvc'
-                    type='text'
-                    value={cvc}
-                    onChange={(e) => {
-                      setCvc(e.target.value);
-                    }}
-                  />
-                </S.FormItem>
+                <TextField
+                  fullWidth
+                  variant='standard'
+                  label='MM/YY'
+                  id='expiryDate'
+                  type='text'
+                  value={expiryDate}
+                  onChange={(e) => {
+                    setExpiryDate(e.target.value);
+                  }}
+                ></TextField>
+                <TextField
+                  fullWidth
+                  variant='standard'
+                  label='CVC'
+                  id='cvc'
+                  type='text'
+                  value={cvc}
+                  onChange={(e) => {
+                    setCvc(e.target.value);
+                  }}
+                ></TextField>
               </S.FormRow>
             </S.FormColumn>
             <S.FormColumn>
@@ -155,7 +149,7 @@ export const Profile = () => {
           </S.FormInner>
           <S.FormSubmit type='submit'>Сохранить</S.FormSubmit>
         </ProfileForm>
-      </MainPageContent>
+      </ProfilePageContent>
     );
   }
 };
@@ -165,7 +159,7 @@ Profile.propTypes = {
   setPage: PropTypes.func,
 };
 
-const MainPageContent = styled.div`
+const ProfilePageContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,6 +176,7 @@ const ProfileForm = styled.form`
   align-items: center;
   background-color: #fff;
   border-radius: 20px;
+  box-shadow: 0px 0px 20px -5px #00000060;
   padding: min(calc(((100vw - 800px) / 20) + 10px), 40px)
     min(calc(((100vw - 800px) / 10) + 10px), 80px);
   @media (max-width: 800px) {

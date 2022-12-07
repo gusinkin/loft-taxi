@@ -41,7 +41,7 @@ export const Header = () => {
         <HeaderLogoImg src={headerLogo} alt='logo' />
       </HeaderLogo>
       <HeaderList>
-        <li>
+        <HeaderItem>
           <Link to='/main/order'>
             <HeaderButton
               type='button'
@@ -51,8 +51,8 @@ export const Header = () => {
               Карта
             </HeaderButton>
           </Link>
-        </li>
-        <li>
+        </HeaderItem>
+        <HeaderItem>
           <Link to='/main/profile'>
             <HeaderButton
               type='button'
@@ -62,8 +62,8 @@ export const Header = () => {
               Профиль
             </HeaderButton>
           </Link>
-        </li>
-        <li>
+        </HeaderItem>
+        <HeaderItem>
           <HeaderButton
             data-testid='logout-btn'
             type='button'
@@ -71,7 +71,7 @@ export const Header = () => {
           >
             Выйти
           </HeaderButton>
-        </li>
+        </HeaderItem>
       </HeaderList>
     </StyledHeader>
   );
@@ -106,6 +106,10 @@ const HeaderList = styled.nav`
   list-style: none;
 `;
 
+const HeaderItem = styled.li`
+  margin: 0 20px;
+`;
+
 const HeaderButton = styled.button`
   background: transparent;
   border: none;
@@ -113,5 +117,9 @@ const HeaderButton = styled.button`
   cursor: pointer;
   font-size: 16px;
   font-weight: 400;
-  margin: 0 20px;
+  margin: 0;
+  padding: 5px;
+  &:hover {
+    color: #fdbf5a;
+  }
 `;

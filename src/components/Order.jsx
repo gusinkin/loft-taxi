@@ -195,7 +195,6 @@ const PopupContainer = styled.div`
   z-index: auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   @media (max-width: 800px) {
     top: 10%;
     left: 0;
@@ -212,10 +211,11 @@ const Popup = styled.div`
   align-items: center;
   border-radius: 20px;
   z-index: 10;
-  padding: min(calc(((100vw - 800px) / 20) + 20px), 40px);
+  padding: min(calc(((100vw - 800px) / 20) + 20px), 30px);
+  box-shadow: 0px 0px 20px -5px #00000060;
+
   &:nth-child(2) {
     margin-top: -35px;
-    box-shadow: 0px 0px 20px -5px rgb(0 0 0 / 25%);
   }
   &:last-child {
     @media (max-width: 800px) {
@@ -233,20 +233,22 @@ const SelectBlock = styled.div`
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  width: 100%;
   @media (max-width: 800px) {
     margin-bottom: 0;
   }
 `;
 
 const OptionsBlock = styled.div`
-  /* box-shadow: 0px 0px 20px -5px rgb(0 0 0 / 25%); */
   border-radius: 10px;
   display: flex;
-  justify-content: space-between;
   gap: 10px;
   margin-bottom: 30px;
   @media (max-width: 800px) {
     margin-bottom: 10px;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 0;
   }
 `;
 
@@ -255,7 +257,7 @@ const OptionCard = styled.li`
   flex-direction: column;
   max-width: 118px;
   background: #fff;
-  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 20px 0px #00000033;
   border-radius: 10px;
   padding: 10px;
   cursor: pointer;
@@ -305,5 +307,5 @@ const OptionPic = styled.img`
 
 const MySelect = styled(Select)`
   margin-bottom: 10px;
-  min-width: 362px;
+  width: 100%;
 `;

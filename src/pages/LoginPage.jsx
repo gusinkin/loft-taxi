@@ -63,45 +63,29 @@ export const LoginPage = () => {
           <S.FormHeader>
             <S.FormName>Войти</S.FormName>
           </S.FormHeader>
-
           <S.FormColumn>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='email'>Email</S.FormLabel>
-                <S.FormInput
-                  name='email'
-                  id='email'
-                  type='text'
-                  data-testid='email'
-                />
-              </S.FormItem>
-              {/* <TextField
+              <TextField
+                fullWidth
                 variant='standard'
                 label='Email'
                 type='email'
+                id='email'
                 placeholder='mail@mail.ru'
-              ></TextField> */}
+              ></TextField>
             </S.FormRow>
             <S.FormRow>
-              <S.FormItem>
-                <S.FormLabel htmlFor='password'>Пароль</S.FormLabel>
-                <S.FormInput
-                  name='password'
-                  id='password'
-                  type='password'
-                  data-testid='password'
-                />
-              </S.FormItem>
-              {/* <TextField
+              <TextField
+                fullWidth
                 variant='standard'
                 label='Пароль'
                 type='password'
+                id='password'
                 placeholder='********'
-              ></TextField> */}
+              ></TextField>
             </S.FormRow>
           </S.FormColumn>
-
-          <S.FormSubmit type='submit' data-testid='login-btn'>
+          <S.FormSubmit login={true} type='submit' data-testid='login-btn'>
             Войти
           </S.FormSubmit>
           <span>

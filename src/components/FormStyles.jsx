@@ -1,4 +1,3 @@
-import { TextField } from '@mui/material';
 import styled from 'styled-components';
 
 export const Form = styled.form`
@@ -8,6 +7,7 @@ export const Form = styled.form`
   background-color: #fff;
   border-radius: 20px;
   padding: 50px 100px;
+  box-shadow: 0px 0px 20px -5px #00000060;
   @media (max-width: 800px) {
     border-radius: 0;
     padding: 5px 20px;
@@ -16,10 +16,10 @@ export const Form = styled.form`
 `;
 
 export const FormHeader = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   text-align: center;
   @media (max-width: 800px) {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
   }
 `;
 
@@ -27,10 +27,8 @@ export const FormName = styled.h2`
   text-align: center;
   font-size: 30px;
   font-weight: 700;
-  @media (max-width: 800px) {
-    margin-block-start: 0;
-    margin-block-end: 0;
-  }
+  margin-block-end: 0;
+  margin-block-start: 0;
 `;
 
 export const FormInner = styled.div`
@@ -47,6 +45,7 @@ export const FormColumn = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 10px;
 `;
 
 export const FormRow = styled.div`
@@ -54,29 +53,7 @@ export const FormRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   column-gap: 15%;
-  margin-bottom: 15px;
-  width: 100%;
-`;
-
-export const FormItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-export const FormLabel = styled.label`
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 15px;
-`;
-
-export const FormInput = styled.input`
-  margin-bottom: 15px;
-  border-width: 0;
-  border-bottom-width: 1px;
-  outline: none;
-  font-size: 18px;
-  font-weight: 400;
+  margin-bottom: 25px;
   width: 100%;
 `;
 
@@ -92,8 +69,11 @@ export const FormSubmit = styled.button`
   width: 100%;
   background-color: #fdbf5a;
   align-self: center;
-  margin-bottom: 15px;
+  margin-bottom: ${({ login }) => (login ? '20px' : '0')};
   @media (max-width: 800px) {
     margin-bottom: 5px;
+  }
+  &:hover {
+    background-color: #ffa842;
   }
 `;
