@@ -1,9 +1,10 @@
 import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
 import { setPage, setLoading } from '../redux/store/ui/actions';
-import { register } from '../redux/store/user/actions';
+import { reg } from '../redux/store/user/actions';
 import { logged } from '../redux/store/user/selector';
 import { loading } from '../redux/store/ui/selector';
 import sideBarLogo from '../svg/sidebar.svg';
@@ -17,6 +18,11 @@ export const RegPage = () => {
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
   const isLoading = useSelector(loading);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     if (isLoading) {
@@ -24,19 +30,8 @@ export const RegPage = () => {
     }
   }, []);
 
-  const registrate = (event) => {
-    event.preventDefault();
-
-    const { email, password, name, surname } = event.target;
-
-    const payload = {
-      email: email.value,
-      password: password.value,
-      name: name.value,
-      surname: surname.value,
-    };
-
-    dispatch(register(payload));
+  const registrate = (data) => {
+    dispatch(reg(data));
   };
 
   const changeState = useCallback(
@@ -54,15 +49,15 @@ export const RegPage = () => {
   }, [loggedIn, navigate, changeState]);
 
   return (
-    <Page loading={isLoading} data-testid='registration-page'>
-      <Spinner loading={isLoading}>
+    <Page loading={isLoading ? 1 : 0} data-testid='registration-page'>
+      <Spinner loading={isLoading ? 1 : 0}>
         <img src={loadingAnim} alt='loading' />
       </Spinner>
       <SideBar>
         <img src={sideBarLogo} alt='logo' />
       </SideBar>
       <LoginPageContent>
-        <S.Form onSubmit={registrate}>
+        <S.Form onSubmit={handleSubmit(registrate)}>
           <S.FormHeader>
             <S.FormName>Регистрация</S.FormName>
           </S.FormHeader>
@@ -75,6 +70,11 @@ export const RegPage = () => {
                 type='email'
                 id='email'
                 placeholder='mail@mail.ru'
+                error={errors.email ? true : false}
+                helperText={errors.email ? errors.email.message : ' '}
+                {...register('email', {
+                  required: 'Введите email',
+                })}
               ></TextField>
             </S.FormRow>
             <S.FormRow>
@@ -85,6 +85,11 @@ export const RegPage = () => {
                 type='text'
                 id='name'
                 placeholder='Александр'
+                error={errors.name ? true : false}
+                helperText={errors.name ? errors.name.message : ' '}
+                {...register('name', {
+                  required: 'Введите имя',
+                })}
               ></TextField>
             </S.FormRow>
             <S.FormRow>
@@ -95,6 +100,11 @@ export const RegPage = () => {
                 type='text'
                 id='surname'
                 placeholder='Пушкин'
+                error={errors.surname ? true : false}
+                helperText={errors.surname ? errors.surname.message : ' '}
+                {...register('surname', {
+                  required: 'Введите фамилию',
+                })}
               ></TextField>
             </S.FormRow>
             <S.FormRow>
@@ -105,6 +115,15 @@ export const RegPage = () => {
                 type='password'
                 id='password'
                 placeholder='********'
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password.message : ' '}
+                {...register('password', {
+                  required: 'Введите пароль',
+                  minLength: {
+                    value: 8,
+                    message: 'Минимум 8 символов',
+                  },
+                })}
               ></TextField>
             </S.FormRow>
           </S.FormColumn>

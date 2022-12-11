@@ -1,6 +1,7 @@
 import { React, useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { setPage } from '../redux/store/ui/actions';
 import { updateCard } from '../redux/store/payment/actions';
@@ -16,27 +17,27 @@ export const Profile = () => {
   const loggedIn = useSelector(logged);
   const currentCardData = useSelector(cardData);
   const authToken = useSelector(token);
-
   const [submited, setSubmited] = useState(false);
-
-  const [cardName, setCardName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-  const [cvc, setCvc] = useState('');
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     if (loggedIn) {
-      setCardName(currentCardData.cardName);
-      setCardNumber(currentCardData.cardNumber);
-      setExpiryDate(currentCardData.expiryDate);
-      setCvc(currentCardData.cvc);
+      setValue('cardName', currentCardData.cardName);
+      setValue('cardNumber', currentCardData.cardNumber);
+      setValue('expiryDate', currentCardData.expiryDate);
+      setValue('cvc', currentCardData.cvc);
     } else {
-      setCardName('');
-      setCardNumber('');
-      setExpiryDate('');
-      setCvc('');
+      setValue('cardName', '');
+      setValue('cardNumber', '');
+      setValue('expiryDate', '');
+      setValue('cvc', '');
     }
-  }, [currentCardData, loggedIn]);
+  }, [currentCardData, loggedIn, setValue]);
 
   const changeState = useCallback(
     (pageName) => {
@@ -46,18 +47,14 @@ export const Profile = () => {
   );
 
   const submitCard = useCallback(
-    (event) => {
-      event.preventDefault();
-
+    (data) => {
       setSubmited(true);
 
-      const { cardName, cardNumber, expiryDate, cvc } = event.target;
-
       const payload = {
-        cardName: cardName.value,
-        cardNumber: cardNumber.value,
-        expiryDate: expiryDate.value,
-        cvc: cvc.value,
+        cardName: data.cardName,
+        cardNumber: data.cardNumber,
+        expiryDate: data.expiryDate,
+        cvc: data.cvc,
         token: authToken,
       };
 
@@ -87,7 +84,7 @@ export const Profile = () => {
   } else {
     return (
       <ProfilePageContent>
-        <ProfileForm onSubmit={submitCard}>
+        <ProfileForm onSubmit={handleSubmit(submitCard)}>
           <S.FormHeader>
             <S.FormName>Профиль</S.FormName>
             <p>Введите платежные данные</p>
@@ -101,8 +98,11 @@ export const Profile = () => {
                   label='Имя владельца'
                   id='cardName'
                   type='text'
-                  value={cardName}
-                  onChange={(e) => setCardName(e.target.value)}
+                  error={errors.cardName ? true : false}
+                  helperText={errors.cardName ? errors.cardName.message : ' '}
+                  {...register('cardName', {
+                    required: 'Введите имя',
+                  })}
                 ></TextField>
               </S.FormRow>
               <S.FormRow>
@@ -112,8 +112,13 @@ export const Profile = () => {
                   label='Номер карты'
                   id='cardNumber'
                   type='text'
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(e.target.value)}
+                  error={errors.cardNumber ? true : false}
+                  helperText={
+                    errors.cardNumber ? errors.cardNumber.message : ' '
+                  }
+                  {...register('cardNumber', {
+                    required: 'Введите номер карты',
+                  })}
                 ></TextField>
               </S.FormRow>
               <S.FormRow>
@@ -123,10 +128,13 @@ export const Profile = () => {
                   label='MM/YY'
                   id='expiryDate'
                   type='text'
-                  value={expiryDate}
-                  onChange={(e) => {
-                    setExpiryDate(e.target.value);
-                  }}
+                  error={errors.expiryDate ? true : false}
+                  helperText={
+                    errors.expiryDate ? errors.expiryDate.message : ' '
+                  }
+                  {...register('expiryDate', {
+                    required: 'Введите срок действия',
+                  })}
                 ></TextField>
                 <TextField
                   fullWidth
@@ -134,10 +142,11 @@ export const Profile = () => {
                   label='CVC'
                   id='cvc'
                   type='text'
-                  value={cvc}
-                  onChange={(e) => {
-                    setCvc(e.target.value);
-                  }}
+                  error={errors.cvc ? true : false}
+                  helperText={errors.cvc ? errors.cvc.message : ' '}
+                  {...register('cvc', {
+                    required: 'Введите CVC',
+                  })}
                 ></TextField>
               </S.FormRow>
             </S.FormColumn>

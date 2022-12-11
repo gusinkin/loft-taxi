@@ -1,6 +1,7 @@
 import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { setPage, setLoading } from '../redux/store/ui/actions';
 import { authenticate } from '../redux/store/user/actions';
@@ -17,6 +18,11 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
   const isLoading = useSelector(loading);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     if (isLoading) {
@@ -24,16 +30,8 @@ export const LoginPage = () => {
     }
   }, []);
 
-  const setUser = (event) => {
-    event.preventDefault();
-
-    const { email, password } = event.target;
-
-    const payload = {
-      email: email.value,
-      password: password.value,
-    };
-    dispatch(authenticate(payload));
+  const setUser = (data) => {
+    dispatch(authenticate(data));
   };
 
   const changeState = useCallback(
@@ -59,7 +57,7 @@ export const LoginPage = () => {
         <img src={sideBarLogo} alt='logo' />
       </SideBar>
       <LoginPageContent>
-        <S.Form data-testid='login-form' onSubmit={setUser}>
+        <S.Form data-testid='login-form' onSubmit={handleSubmit(setUser)}>
           <S.FormHeader>
             <S.FormName>Войти</S.FormName>
           </S.FormHeader>
@@ -72,6 +70,11 @@ export const LoginPage = () => {
                 type='email'
                 id='email'
                 placeholder='mail@mail.ru'
+                error={errors.email ? true : false}
+                helperText={errors.email ? errors.email.message : ' '}
+                {...register('email', {
+                  required: 'Введите email',
+                })}
               ></TextField>
             </S.FormRow>
             <S.FormRow>
@@ -82,6 +85,11 @@ export const LoginPage = () => {
                 type='password'
                 id='password'
                 placeholder='********'
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password.message : ' '}
+                {...register('password', {
+                  required: 'Введите пароль',
+                })}
               ></TextField>
             </S.FormRow>
           </S.FormColumn>

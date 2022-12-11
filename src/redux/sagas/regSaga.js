@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { register, logIn, logOut } from '../store/user/actions';
+import { reg, logIn, logOut } from '../store/user/actions';
 import { setLoading } from '../store/ui/actions';
 import { regRequest } from '../requests/regRequest';
 
@@ -28,5 +28,5 @@ export function* registrationSaga(action) {
 }
 
 export function* regSaga() {
-  yield takeEvery(register, registrationSaga);
+  yield takeEvery(reg, registrationSaga);
 }

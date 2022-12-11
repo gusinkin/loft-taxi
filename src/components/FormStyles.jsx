@@ -53,7 +53,7 @@ export const FormRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   column-gap: 15%;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
   width: 100%;
 `;
 

@@ -149,8 +149,9 @@ export const Order = () => {
           </Popup>
           <Popup>
             <OptionsBlock>
-              {options.map((option) => (
+              {options.map((option, index) => (
                 <OptionCard
+                  key={index}
                   optionName={option.name}
                   nowActive={active}
                   onClick={() => setActive(option.name)}
