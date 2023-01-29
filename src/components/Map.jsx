@@ -7,6 +7,10 @@ import { coords } from '../redux/store/order/selector';
 import { getAddressList } from '../redux/store/order/actions';
 import styled from 'styled-components';
 
+mapboxgl.workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 export const Map = () => {
   const mapContainer = useRef(null);
   const { savedMap, setSavedMap } = useContext(mapContext);
