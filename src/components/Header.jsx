@@ -1,7 +1,6 @@
 import { React, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import { setPage } from '../redux/store/ui/actions';
 import { logOut } from '../redux/store/user/actions';
 import { page } from '../redux/store/ui/selector';
@@ -75,13 +74,6 @@ export const Header = () => {
       </HeaderList>
     </StyledHeader>
   );
-};
-
-Header.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func,
-  logOut: PropTypes.func,
-  changeState: PropTypes.func,
 };
 
 const StyledHeader = styled.header`

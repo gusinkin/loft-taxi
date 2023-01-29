@@ -2,7 +2,6 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { PropTypes } from 'prop-types';
 import { setPage, setLoading } from '../redux/store/ui/actions';
 import { reg } from '../redux/store/user/actions';
 import { logged } from '../redux/store/user/selector';
@@ -142,11 +141,4 @@ export const RegPage = () => {
       </LoginPageContent>
     </Page>
   );
-};
-
-RegPage.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func,
-  logOut: PropTypes.func,
-  changeState: PropTypes.func,
 };

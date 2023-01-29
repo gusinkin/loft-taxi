@@ -2,7 +2,6 @@ import { React, useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import PropTypes from 'prop-types';
 import { setPage } from '../redux/store/ui/actions';
 import { updateCard } from '../redux/store/payment/actions';
 import { logged, token } from '../redux/store/user/selector';
@@ -161,11 +160,6 @@ export const Profile = () => {
       </ProfilePageContent>
     );
   }
-};
-
-Profile.propTypes = {
-  logOut: PropTypes.func,
-  setPage: PropTypes.func,
 };
 
 const ProfilePageContent = styled.div`

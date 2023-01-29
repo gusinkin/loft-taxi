@@ -2,7 +2,6 @@ import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import PropTypes from 'prop-types';
 import { setPage, setLoading } from '../redux/store/ui/actions';
 import { authenticate } from '../redux/store/user/actions';
 import { logged } from '../redux/store/user/selector';
@@ -112,13 +111,6 @@ export const LoginPage = () => {
       </LoginPageContent>
     </Page>
   );
-};
-
-LoginPage.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func,
-  logOut: PropTypes.func,
-  changeState: PropTypes.func,
 };
 
 export const Page = styled.div`

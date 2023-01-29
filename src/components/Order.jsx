@@ -90,7 +90,6 @@ export const Order = () => {
       value={address1}
       onChange={submitAddress1}
       displayEmpty
-      // inputProps={{ 'aria-label': 'Without label' }}
     >
       <MenuItem value='' disabled selected>
         Откуда
@@ -109,7 +108,6 @@ export const Order = () => {
       value={address2}
       onChange={submitAddress2}
       displayEmpty
-      // inputProps={{ 'aria-label': 'Without label' }}
     >
       <MenuItem value='' disabled selected>
         Куда

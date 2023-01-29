@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { LoginPage } from './pages/LoginPage';
 import { RegPage } from './pages/RegPage';
 import { MainPage } from './pages/MainPage';
@@ -22,10 +21,6 @@ const App = () => {
       </Routes>
     </StyledApp>
   );
-};
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
 };
 
 const StyledApp = styled.div`

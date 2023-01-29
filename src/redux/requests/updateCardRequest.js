@@ -5,7 +5,7 @@ export const updateCardRequest = async (
   cvc,
   token
 ) => {
-  return fetch(`https://loft-taxi.glitch.me/card`, {
+  return await fetch(`https://loft-taxi.glitch.me/card`, {
     method: 'Post',
     headers: {
       'Content-Type': 'application/json',
