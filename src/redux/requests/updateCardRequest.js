@@ -2,9 +2,10 @@ export const updateCardRequest = async (
   cardNumber,
   expiryDate,
   cardName,
-  cvc
+  cvc,
+  token
 ) => {
-  return fetch(`https://loft-taxi.glitch.me/card`, {
+  return await fetch(`https://loft-taxi.glitch.me/card`, {
     method: 'Post',
     headers: {
       'Content-Type': 'application/json',
@@ -14,6 +15,7 @@ export const updateCardRequest = async (
       cardNumber: cardNumber,
       expiryDate: expiryDate,
       cvc: cvc,
+      token: token,
     }),
   }).then((response) => response.json());
 };

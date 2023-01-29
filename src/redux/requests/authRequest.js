@@ -1,5 +1,5 @@
 export const authRequest = async (email, password) => {
-  return fetch(`https://loft-taxi.glitch.me/auth`, {
+  return await fetch(`https://loft-taxi.glitch.me/auth`, {
     method: 'Post',
     headers: {
       'Content-Type': 'application/json',

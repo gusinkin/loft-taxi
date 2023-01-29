@@ -1,27 +1,30 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { LoginPage } from './pages/LoginPage';
-import { MapPage } from './pages/MapPage';
-import { ProfilePage } from './pages/ProfilePage';
 import { RegPage } from './pages/RegPage';
-import './styles/App.css';
+import { MainPage } from './pages/MainPage';
+import { Order } from './components/Order';
+import { Profile } from './components/Profile';
+import styled from 'styled-components';
+import bg from './images/bg-map.png';
 
 const App = () => {
   return (
-    <div className='app'>
+    <StyledApp background={bg}>
       <Routes>
         <Route index element={<LoginPage />} />
         <Route path='/reg' element={<RegPage />} />
-        <Route path='/map' element={<MapPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/main' element={<MainPage />}>
+          <Route path='order' element={<Order />} />
+          <Route path='profile' element={<Profile />} />
+        </Route>
       </Routes>
-    </div>
+    </StyledApp>
   );
 };
 
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
-};
-
+const StyledApp = styled.div`
+  height: 100vh;
+  background-image: url(${bg});
+`;
 export default App;

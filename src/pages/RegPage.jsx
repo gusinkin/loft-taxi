@@ -1,17 +1,37 @@
 import { React, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
-import { setPage } from '../redux/ui/actions';
-import { register } from '../redux/user/actions';
-import { logged } from '../redux/user/selector';
+import { useForm } from 'react-hook-form';
+import { setPage, setLoading } from '../redux/store/ui/actions';
+import { reg } from '../redux/store/user/actions';
+import { logged } from '../redux/store/user/selector';
+import { loading } from '../redux/store/ui/selector';
 import sideBarLogo from '../svg/sidebar.svg';
-import '../styles/Form.css';
+import loadingAnim from '../images/loading.gif';
+import TextField from '@mui/material/TextField';
+import { Page, Spinner, SideBar, LoginPageContent, Button } from './LoginPage';
+import * as S from '../components/FormStyles';
 
 export const RegPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector(logged);
+  const isLoading = useSelector(loading);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(setLoading(false));
+    }
+  }, []);
+
+  const registrate = (data) => {
+    dispatch(reg(data));
+  };
 
   const changeState = useCallback(
     (pageName) => {
@@ -22,110 +42,103 @@ export const RegPage = () => {
 
   useEffect(() => {
     if (loggedIn) {
-      navigate('/map');
-      changeState('map');
+      navigate('/main/order');
+      changeState('order');
     }
   }, [loggedIn, navigate, changeState]);
 
-  const registrate = (event) => {
-    event.preventDefault();
-
-    const { email, password, name, surname } = event.target;
-
-    const payload = {
-      email: email.value,
-      password: password.value,
-      name: name.value,
-      surname: surname.value,
-    };
-
-    dispatch(register(payload));
-  };
-
   return (
-    <div className='formPage' data-testid='registration-page'>
-      <div className='sideBar'>
-        <img src={sideBarLogo} className='logo' alt='logo' />
-      </div>
-      <div className='formPageContent'>
-        <div className='formWrapper'>
-          <div className='formHeader'>
-            <h2 className='formName'>Регистрация</h2>
-          </div>
-          <form onSubmit={registrate}>
-            <div className='formColumn'>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='email'>Email*</label>
-                  <input
-                    className='formInput'
-                    name='email'
-                    id='email'
-                    type='text'
-                  />
-                </div>
-              </div>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='name'>Как Вас зовут?*</label>
-                  <input
-                    className='formInput'
-                    name='name'
-                    id='name'
-                    type='text'
-                  />
-                </div>
-              </div>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='surname'>Ваша фамилия*</label>
-                  <input
-                    className='formInput'
-                    name='surname'
-                    id='surname'
-                    type='text'
-                  />
-                </div>
-              </div>
-              <div className='formRow'>
-                <div className='formItem'>
-                  <label htmlFor='password'>Придумайте пароль*</label>
-                  <input
-                    className='formInput'
-                    name='password'
-                    id='password'
-                    type='text'
-                  />
-                </div>
-              </div>
-              <button className='formSubmit' type='submit'>
-                Зарегистрироваться
-              </button>
-            </div>
-          </form>
-          <div>
-            <span className='formSpan'>
-              Уже зарегистрированы?{' '}
-              <Link to='/'>
-                <button
-                  className='navButton'
-                  type='button'
-                  onClick={() => changeState('login')}
-                >
-                  Войти
-                </button>
-              </Link>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Page loading={isLoading ? 1 : 0} data-testid='registration-page'>
+      <Spinner loading={isLoading ? 1 : 0}>
+        <img src={loadingAnim} alt='loading' />
+      </Spinner>
+      <SideBar>
+        <img src={sideBarLogo} alt='logo' />
+      </SideBar>
+      <LoginPageContent>
+        <S.Form onSubmit={handleSubmit(registrate)}>
+          <S.FormHeader>
+            <S.FormName>Регистрация</S.FormName>
+          </S.FormHeader>
+          <S.FormColumn>
+            <S.FormRow>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Email'
+                type='email'
+                id='email'
+                placeholder='mail@mail.ru'
+                error={errors.email ? true : false}
+                helperText={errors.email ? errors.email.message : ' '}
+                {...register('email', {
+                  required: 'Введите email',
+                })}
+              ></TextField>
+            </S.FormRow>
+            <S.FormRow>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Ваше имя'
+                type='text'
+                id='name'
+                placeholder='Александр'
+                error={errors.name ? true : false}
+                helperText={errors.name ? errors.name.message : ' '}
+                {...register('name', {
+                  required: 'Введите имя',
+                })}
+              ></TextField>
+            </S.FormRow>
+            <S.FormRow>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Ваша фамилия'
+                type='text'
+                id='surname'
+                placeholder='Пушкин'
+                error={errors.surname ? true : false}
+                helperText={errors.surname ? errors.surname.message : ' '}
+                {...register('surname', {
+                  required: 'Введите фамилию',
+                })}
+              ></TextField>
+            </S.FormRow>
+            <S.FormRow>
+              <TextField
+                fullWidth
+                variant='standard'
+                label='Придумайте пароль'
+                type='password'
+                id='password'
+                placeholder='********'
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password.message : ' '}
+                {...register('password', {
+                  required: 'Введите пароль',
+                  minLength: {
+                    value: 8,
+                    message: 'Минимум 8 символов',
+                  },
+                })}
+              ></TextField>
+            </S.FormRow>
+          </S.FormColumn>
+          <S.FormSubmit login={true} type='submit'>
+            Зарегистрироваться
+          </S.FormSubmit>
+          <span>
+            Уже зарегистрированы?{' '}
+            <Link to='/'>
+              <Button type='button' onClick={() => changeState('login')}>
+                Войти
+              </Button>
+            </Link>
+          </span>
+        </S.Form>
+      </LoginPageContent>
+    </Page>
   );
-};
-
-RegPage.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logIn: PropTypes.func,
-  logOut: PropTypes.func,
-  changeState: PropTypes.func,
 };

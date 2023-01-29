@@ -1,5 +1,5 @@
 export const regRequest = async (email, password, name, surname) => {
-  return fetch(`https://loft-taxi.glitch.me/register`, {
+  return await fetch(`https://loft-taxi.glitch.me/register`, {
     method: 'Post',
     headers: {
       'Content-Type': 'application/json',

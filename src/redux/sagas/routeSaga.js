@@ -1,13 +1,15 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { getRoute, setRoute } from '../order/actions';
+import { getRoute, setRoute } from '../store/order/actions';
 import { getRouteRequest } from '../requests/getRouteRequest';
 
 function* getRouteSaga(action) {
   const data = action.payload;
-  const success = yield call(getRouteRequest, data);
+  const response = yield call(getRouteRequest, data);
 
-  if (success) {
-    yield put(setRoute(success));
+  if (response) {
+    yield put(setRoute(response));
+  } else {
+    alert('Не удалось получить маршрут с сервера');
   }
 }
 
